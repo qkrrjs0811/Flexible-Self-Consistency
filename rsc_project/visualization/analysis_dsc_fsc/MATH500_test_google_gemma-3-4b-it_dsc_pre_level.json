@@ -1,0 +1,163 @@
+{
+  "model": "google/gemma-3-4b-it",
+  "dataset": "MATH500_test",
+  "stages_config": "40",
+  "n": 40,
+  "judge_window_size": 24,
+  "window_size": 4,
+  "bootstrap_seed": 137,
+  "trial": 0,
+  "subset_n": 40,
+  "easy_threshold": 0.95,
+  "easy_count": 142,
+  "hard_count": 358,
+  "crosstab": {
+    "easy": {
+      "1": 21,
+      "2": 27,
+      "3": 33,
+      "4": 28,
+      "5": 33
+    },
+    "hard": {
+      "1": 22,
+      "2": 63,
+      "3": 72,
+      "4": 100,
+      "5": 101
+    }
+  },
+  "level_totals": {
+    "1": 43,
+    "2": 90,
+    "3": 105,
+    "4": 128,
+    "5": 134
+  },
+  "dsc_greedy_split_paths_used_by_easy_hard_level": {
+    "easy": {
+      "1": {
+        "n": 21,
+        "mean": 1.0,
+        "min": 1,
+        "max": 1,
+        "histogram": {
+          "1": 21
+        }
+      },
+      "2": {
+        "n": 27,
+        "mean": 1.0,
+        "min": 1,
+        "max": 1,
+        "histogram": {
+          "1": 27
+        }
+      },
+      "3": {
+        "n": 33,
+        "mean": 1.0,
+        "min": 1,
+        "max": 1,
+        "histogram": {
+          "1": 33
+        }
+      },
+      "4": {
+        "n": 28,
+        "mean": 1.0,
+        "min": 1,
+        "max": 1,
+        "histogram": {
+          "1": 28
+        }
+      },
+      "5": {
+        "n": 33,
+        "mean": 1.0,
+        "min": 1,
+        "max": 1,
+        "histogram": {
+          "1": 33
+        }
+      }
+    },
+    "hard": {
+      "1": {
+        "n": 22,
+        "mean": 4.181818181818182,
+        "min": 4,
+        "max": 8,
+        "histogram": {
+          "4": 21,
+          "8": 1
+        }
+      },
+      "2": {
+        "n": 63,
+        "mean": 8.253968253968255,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 51,
+          "8": 3,
+          "12": 1,
+          "16": 1,
+          "28": 1,
+          "36": 1,
+          "40": 5
+        }
+      },
+      "3": {
+        "n": 72,
+        "mean": 9.0,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 53,
+          "8": 3,
+          "12": 4,
+          "16": 2,
+          "20": 1,
+          "28": 4,
+          "40": 5
+        }
+      },
+      "4": {
+        "n": 100,
+        "mean": 12.44,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 60,
+          "8": 6,
+          "12": 5,
+          "16": 4,
+          "20": 6,
+          "24": 2,
+          "28": 1,
+          "36": 1,
+          "40": 15
+        }
+      },
+      "5": {
+        "n": 101,
+        "mean": 15.881188118811881,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 50,
+          "8": 11,
+          "12": 3,
+          "16": 3,
+          "20": 2,
+          "24": 2,
+          "28": 2,
+          "32": 4,
+          "40": 24
+        }
+      }
+    }
+  },
+  "output_file": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/visualization/analysis_dsc_fsc/MATH500_test_google_gemma-3-4b-it_dsc_pre_level.json"
+}

@@ -1,0 +1,35 @@
+INFO 03-30 10:52:48 [__init__.py:216] Automatically detected platform cuda.
+Auto-generated SC sample path: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/Stage1/MATH500_test.json
+Auto-generated eval path: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/dsc_eval/MATH500_test_Qwen_Qwen2.5-3B-Instruct_eval_strategy_random_prompt_short_batchsize_8_iter_5_n_1_temp_0.jsonl
+[INFO] Using tokenizer for model: Qwen/Qwen2.5-3B-Instruct
+unmatch count=1
+greedy unmatch count=1
+easy count=0
+hard count=500
+Step 2 processed problems: 500 / 500
+[Prepare Step 2] Easy/Hard split time: 0.00s
+
+============================================================
+Output path: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/dsc_cmp/MATH500_test_Qwen_Qwen2.5-3B-Instruct_n_40_judge_window_24_interplot_16.json
+============================================================
+easy count=0
+hard count=500
+Step 2 processed problems: 500 / 500
+greedy easy count=0
+greedy hard count=0
+DSC_hard: Samples=14.90, Prepare(Total=3000.81 avg, Input=539.37 avg, Output=2461.44 avg), Inference(Input=568.00, Output=11320.06, Total=11888.06), Acc=0.7460
+DSC: Samples=15.29, Prepare(Total=3000.81 avg, Input=539.37 avg, Output=2461.44 avg), Inference(Input=583.76, Output=11728.59, Total=12312.35), Acc=0.7460
+DSC_greedy: Samples=15.29, Prepare(Total=3000.81 avg, Input=539.37 avg, Output=2461.44 avg), Inference(Input=583.76, Output=11728.59, Total=12312.35), Acc=0.7460
+DSC_window: Samples=16.73, Prepare(Total=3000.81 avg, Input=539.37 avg, Output=2461.44 avg), Inference(Input=201.27, Output=12745.22, Total=12946.49), Acc=0.7460
+DSC_pre: Samples=16.73, Prepare(Total=3000.81 avg, Input=539.37 avg, Output=2461.44 avg), Inference(Input=201.27, Output=12745.22, Total=12946.49), Acc=0.7460
+
+Prepare 상세 정보:
+  Step 1 (Difficulty Ranking) time=78.85s
+  Step 2 (Easy/Hard Split) time=0.00s
+  Prepare Total time=78.86s (Step 1 + Step 2)
+  Step 1 (Difficulty Ranking, 문제당 평균) input_token=418.27 output_token=18.67
+  Step 2 (Problem Partition, 문제당 평균) input_token=121.10 output_token=2442.77
+  Prepare (문제당 평균) total_token=3000.81 input_token=539.37 output_token=2461.44
+  Prepare (전체 합계) input_token=269683 output_token=1230720 time=78.86s
+Done! Result saved to experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/dsc_cmp/MATH500_test_Qwen_Qwen2.5-3B-Instruct_n_40_judge_window_24_interplot_16.json
+DSC results added to eval_result.txt: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/eval_result.txt

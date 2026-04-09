@@ -1,0 +1,37 @@
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Jupyter Notebook temporary files
+*.ipynb_checkpoints
+*.ipynb_checkpoint
+
+# Jupyter Notebook autosave
+*.autosave.ipynb
+
+data/Evaluation_CoTs/final.csv
+
+__pycache__/
+*.pyc
+.cursor/
+eval/temp/
+
+
+# large data
+data/
+result/
+
+eval/Evaluation_CoTs/
+DTS_testset/
+confidence_analysis/*.png
+src/eval/*.png
+rsc_project/experiments/results/
+rsc_project/experiments/results_optimal/
+rsc_project/probe
+
+
+src/api_key_yw.txt
+src/api_key_claude_yw.txt
+src/api_key_gy.txt
+*.key
+.env

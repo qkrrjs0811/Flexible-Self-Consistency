@@ -1,0 +1,35 @@
+INFO 03-30 10:52:57 [__init__.py:216] Automatically detected platform cuda.
+Auto-generated SC sample path: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/Stage1/AIME_2024.json
+Auto-generated eval path: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/dsc_eval/AIME_2024_Qwen_Qwen2.5-3B-Instruct_eval_strategy_random_prompt_short_batchsize_8_iter_5_n_1_temp_0.jsonl
+[INFO] Using tokenizer for model: Qwen/Qwen2.5-3B-Instruct
+unmatch count=0
+greedy unmatch count=0
+easy count=0
+hard count=30
+Step 2 processed problems: 30 / 30
+[Prepare Step 2] Easy/Hard split time: 0.00s
+
+============================================================
+Output path: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/dsc_cmp/AIME_2024_Qwen_Qwen2.5-3B-Instruct_n_40_judge_window_24_interplot_16.json
+============================================================
+easy count=0
+hard count=30
+Step 2 processed problems: 30 / 30
+greedy easy count=0
+greedy hard count=0
+DSC_hard: Samples=32.67, Prepare(Total=5242.47 avg, Input=754.20 avg, Output=4488.27 avg), Inference(Input=1258.93, Output=36448.13, Total=37707.07), Acc=0.1333
+DSC: Samples=34.93, Prepare(Total=5242.47 avg, Input=754.20 avg, Output=4488.27 avg), Inference(Input=1334.30, Output=39173.13, Total=40507.43), Acc=0.1667
+DSC_greedy: Samples=34.93, Prepare(Total=5242.47 avg, Input=754.20 avg, Output=4488.27 avg), Inference(Input=1334.30, Output=39173.13, Total=40507.43), Acc=0.1667
+DSC_window: Samples=36.53, Prepare(Total=5242.47 avg, Input=754.20 avg, Output=4488.27 avg), Inference(Input=732.07, Output=40567.37, Total=41299.43), Acc=0.1667
+DSC_pre: Samples=36.53, Prepare(Total=5242.47 avg, Input=754.20 avg, Output=4488.27 avg), Inference(Input=732.07, Output=40567.37, Total=41299.43), Acc=0.1667
+
+Prepare 상세 정보:
+  Step 1 (Difficulty Ranking) time=6.12s
+  Step 2 (Easy/Hard Split) time=0.00s
+  Prepare Total time=6.12s (Step 1 + Step 2)
+  Step 1 (Difficulty Ranking, 문제당 평균) input_token=602.30 output_token=23.60
+  Step 2 (Problem Partition, 문제당 평균) input_token=151.90 output_token=4464.67
+  Prepare (문제당 평균) total_token=5242.47 input_token=754.20 output_token=4488.27
+  Prepare (전체 합계) input_token=22625 output_token=134648 time=6.12s
+Done! Result saved to experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/dsc_cmp/AIME_2024_Qwen_Qwen2.5-3B-Instruct_n_40_judge_window_24_interplot_16.json
+DSC results added to eval_result.txt: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/eval_result.txt

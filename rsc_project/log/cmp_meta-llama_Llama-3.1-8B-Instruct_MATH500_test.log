@@ -1,0 +1,35 @@
+INFO 03-16 09:50:01 [__init__.py:216] Automatically detected platform cuda.
+Auto-generated SC sample path: experiments/results/meta-llama/Llama-3.1-8B-Instruct/stages-100/Stage1/MATH500_test.json
+Auto-generated eval path: experiments/results/meta-llama/Llama-3.1-8B-Instruct/stages-100/dsc_eval/MATH500_test_meta-llama_Llama-3.1-8B-Instruct_eval_strategy_random_prompt_short_batchsize_8_iter_5_n_1_temp_0.jsonl
+[INFO] Using tokenizer for model: meta-llama/Llama-3.1-8B-Instruct
+unmatch count=30
+greedy unmatch count=30
+easy count=0
+hard count=500
+Step 2 processed problems: 500 / 500
+[Prepare Step 2] Easy/Hard split time: 0.00s
+
+============================================================
+Output path: experiments/results/meta-llama/Llama-3.1-8B-Instruct/stages-100/dsc_cmp/MATH500_test_meta-llama_Llama-3.1-8B-Instruct_n_40_judge_window_24_interplot_16.json
+============================================================
+easy count=0
+hard count=500
+Step 2 processed problems: 500 / 500
+greedy easy count=0
+greedy hard count=0
+DSC_hard: Samples=20.76, Prepare(Total=3776.28 avg, Input=561.17 avg, Output=3215.12 avg), Inference(Input=811.39, Output=21343.28, Total=22154.67), Acc=0.6680
+DSC: Samples=21.86, Prepare(Total=3776.28 avg, Input=561.17 avg, Output=3215.12 avg), Inference(Input=861.23, Output=22834.49, Total=23695.72), Acc=0.6760
+DSC_greedy: Samples=21.86, Prepare(Total=3776.28 avg, Input=561.17 avg, Output=3215.12 avg), Inference(Input=861.23, Output=22834.49, Total=23695.72), Acc=0.6760
+DSC_window: Samples=24.90, Prepare(Total=3776.28 avg, Input=561.17 avg, Output=3215.12 avg), Inference(Input=195.75, Output=25107.66, Total=25303.41), Acc=0.6760
+DSC_pre: Samples=24.90, Prepare(Total=3776.28 avg, Input=561.17 avg, Output=3215.12 avg), Inference(Input=195.75, Output=25107.66, Total=25303.41), Acc=0.6760
+
+Prepare 상세 정보:
+  Step 1 (Difficulty Ranking) time=132.30s
+  Step 2 (Easy/Hard Split) time=0.00s
+  Prepare Total time=132.31s (Step 1 + Step 2)
+  Step 1 (Difficulty Ranking, 문제당 평균) input_token=419.41 output_token=15.46
+  Step 2 (Problem Partition, 문제당 평균) input_token=141.76 output_token=3199.66
+  Prepare (문제당 평균) total_token=3776.28 input_token=561.17 output_token=3215.12
+  Prepare (전체 합계) input_token=280583 output_token=1607559 time=132.31s
+Done! Result saved to experiments/results/meta-llama/Llama-3.1-8B-Instruct/stages-100/dsc_cmp/MATH500_test_meta-llama_Llama-3.1-8B-Instruct_n_40_judge_window_24_interplot_16.json
+DSC results added to eval_single (eval_result.txt 미수정): experiments/results/meta-llama/Llama-3.1-8B-Instruct/stages-100/eval_single_137.txt

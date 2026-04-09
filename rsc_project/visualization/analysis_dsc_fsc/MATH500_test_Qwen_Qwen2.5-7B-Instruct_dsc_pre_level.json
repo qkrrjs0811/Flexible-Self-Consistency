@@ -1,0 +1,111 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "dataset": "MATH500_test",
+  "stages_config": "40",
+  "n": 40,
+  "judge_window_size": 24,
+  "window_size": 4,
+  "bootstrap_seed": 137,
+  "trial": 0,
+  "subset_n": 40,
+  "easy_threshold": 0.95,
+  "easy_count": 0,
+  "hard_count": 500,
+  "crosstab": {
+    "hard": {
+      "1": 43,
+      "2": 90,
+      "3": 105,
+      "4": 128,
+      "5": 134
+    }
+  },
+  "level_totals": {
+    "1": 43,
+    "2": 90,
+    "3": 105,
+    "4": 128,
+    "5": 134
+  },
+  "dsc_greedy_split_paths_used_by_easy_hard_level": {
+    "hard": {
+      "1": {
+        "n": 43,
+        "mean": 4.744186046511628,
+        "min": 4,
+        "max": 12,
+        "histogram": {
+          "4": 37,
+          "8": 4,
+          "12": 2
+        }
+      },
+      "2": {
+        "n": 90,
+        "mean": 6.622222222222222,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 71,
+          "8": 9,
+          "12": 4,
+          "16": 2,
+          "40": 4
+        }
+      },
+      "3": {
+        "n": 105,
+        "mean": 8.076190476190476,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 78,
+          "8": 12,
+          "12": 1,
+          "16": 3,
+          "20": 2,
+          "24": 1,
+          "36": 1,
+          "40": 7
+        }
+      },
+      "4": {
+        "n": 128,
+        "mean": 11.46875,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 76,
+          "8": 14,
+          "12": 3,
+          "16": 6,
+          "20": 7,
+          "24": 4,
+          "28": 2,
+          "32": 1,
+          "36": 1,
+          "40": 14
+        }
+      },
+      "5": {
+        "n": 134,
+        "mean": 19.970149253731343,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 46,
+          "8": 12,
+          "12": 11,
+          "16": 5,
+          "20": 3,
+          "24": 5,
+          "28": 3,
+          "32": 4,
+          "36": 2,
+          "40": 43
+        }
+      }
+    }
+  },
+  "output_file": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/visualization/analysis_dsc_fsc/MATH500_test_Qwen_Qwen2.5-7B-Instruct_dsc_pre_level.json"
+}

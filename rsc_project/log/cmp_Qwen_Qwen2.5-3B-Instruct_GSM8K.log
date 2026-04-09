@@ -1,0 +1,35 @@
+INFO 03-30 10:52:41 [__init__.py:216] Automatically detected platform cuda.
+Auto-generated SC sample path: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/Stage1/GSM8K.json
+Auto-generated eval path: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/dsc_eval/GSM8K_Qwen_Qwen2.5-3B-Instruct_eval_strategy_random_prompt_short_batchsize_8_iter_5_n_1_temp_0.jsonl
+[INFO] Using tokenizer for model: Qwen/Qwen2.5-3B-Instruct
+unmatch count=0
+greedy unmatch count=0
+easy count=0
+hard count=1316
+Step 2 processed problems: 1316 / 1316
+[Prepare Step 2] Easy/Hard split time: 0.11s
+
+============================================================
+Output path: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/dsc_cmp/GSM8K_Qwen_Qwen2.5-3B-Instruct_n_40_judge_window_24_interplot_16.json
+============================================================
+easy count=1161
+hard count=155
+Step 2 processed problems: 155 / 1316
+greedy easy count=0
+greedy hard count=0
+DSC_hard: Samples=8.45, Prepare(Total=1757.81 avg, Input=470.75 avg, Output=1287.05 avg), Inference(Input=239.94, Output=2984.77, Total=3224.71), Acc=0.8913
+DSC: Samples=35.98, Prepare(Total=1757.81 avg, Input=470.75 avg, Output=1287.05 avg), Inference(Input=965.86, Output=11685.88, Total=12651.75), Acc=0.8906
+DSC_greedy: Samples=8.57, Prepare(Total=1757.81 avg, Input=470.75 avg, Output=1287.05 avg), Inference(Input=243.67, Output=3036.43, Total=3280.10), Acc=0.8913
+DSC_window: Samples=8.99, Prepare(Total=1757.81 avg, Input=470.75 avg, Output=1287.05 avg), Inference(Input=179.10, Output=3188.37, Total=3367.47), Acc=0.8906
+DSC_pre: Samples=8.99, Prepare(Total=1757.81 avg, Input=470.75 avg, Output=1287.05 avg), Inference(Input=179.10, Output=3188.37, Total=3367.47), Acc=0.8906
+
+Prepare 상세 정보:
+  Step 1 (Difficulty Ranking) time=127.58s
+  Step 2 (Easy/Hard Split) time=0.11s
+  Prepare Total time=127.69s (Step 1 + Step 2)
+  Step 1 (Difficulty Ranking, 문제당 평균) input_token=364.69 output_token=11.13
+  Step 2 (Problem Partition, 문제당 평균) input_token=106.07 output_token=1275.92
+  Prepare (문제당 평균) total_token=1757.81 input_token=470.75 output_token=1287.05
+  Prepare (전체 합계) input_token=619512 output_token=1693764 time=127.69s
+Done! Result saved to experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/dsc_cmp/GSM8K_Qwen_Qwen2.5-3B-Instruct_n_40_judge_window_24_interplot_16.json
+DSC results added to eval_result.txt: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/eval_result.txt

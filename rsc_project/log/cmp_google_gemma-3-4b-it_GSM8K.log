@@ -1,0 +1,35 @@
+INFO 03-30 10:54:49 [__init__.py:216] Automatically detected platform cuda.
+Auto-generated SC sample path: experiments/results/google/gemma-3-4b-it/stages-40/Stage1/GSM8K.json
+Auto-generated eval path: experiments/results/google/gemma-3-4b-it/stages-40/dsc_eval/GSM8K_google_gemma-3-4b-it_eval_strategy_random_prompt_short_batchsize_8_iter_5_n_1_temp_0.jsonl
+[INFO] Using tokenizer for model: google/gemma-3-4b-it
+unmatch count=0
+greedy unmatch count=0
+easy count=1241
+hard count=75
+Step 2 processed problems: 75 / 1316
+[Prepare Step 2] Easy/Hard split time: 0.00s
+
+============================================================
+Output path: experiments/results/google/gemma-3-4b-it/stages-40/dsc_cmp/GSM8K_google_gemma-3-4b-it_n_40_judge_window_24_interplot_16.json
+============================================================
+easy count=1241
+hard count=75
+Step 2 processed problems: 75 / 1316
+greedy easy count=479
+greedy hard count=0
+DSC_hard: Samples=6.80, Prepare(Total=429.35 avg, Input=371.32 avg, Output=58.03 avg), Inference(Input=187.92, Output=2983.23, Total=3171.14), Acc=0.8655
+DSC: Samples=38.03, Prepare(Total=429.35 avg, Input=371.32 avg, Output=58.03 avg), Inference(Input=1013.59, Output=12804.63, Total=13818.22), Acc=0.8655
+DSC_greedy: Samples=19.47, Prepare(Total=429.35 avg, Input=371.32 avg, Output=58.03 avg), Inference(Input=485.80, Output=5924.69, Total=6410.49), Acc=0.8655
+DSC_window: Samples=19.68, Prepare(Total=429.35 avg, Input=371.32 avg, Output=58.03 avg), Inference(Input=455.59, Output=6009.95, Total=6465.54), Acc=0.8655
+DSC_pre: Samples=7.10, Prepare(Total=429.35 avg, Input=371.32 avg, Output=58.03 avg), Inference(Input=162.33, Output=3112.70, Total=3275.03), Acc=0.8655
+
+Prepare 상세 정보:
+  Step 1 (Difficulty Ranking) time=201.47s
+  Step 2 (Easy/Hard Split) time=0.00s
+  Prepare Total time=201.48s (Step 1 + Step 2)
+  Step 1 (Difficulty Ranking, 문제당 평균) input_token=366.38 output_token=14.09
+  Step 2 (Problem Partition, 문제당 평균) input_token=4.94 output_token=43.95
+  Prepare (문제당 평균) total_token=429.35 input_token=371.32 output_token=58.03
+  Prepare (전체 합계) input_token=488651 output_token=76370 time=201.48s
+Done! Result saved to experiments/results/google/gemma-3-4b-it/stages-40/dsc_cmp/GSM8K_google_gemma-3-4b-it_n_40_judge_window_24_interplot_16.json
+DSC results added to eval_result.txt: experiments/results/google/gemma-3-4b-it/stages-40/eval_result.txt

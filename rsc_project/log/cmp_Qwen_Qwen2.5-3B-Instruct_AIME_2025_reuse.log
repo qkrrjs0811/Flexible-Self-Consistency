@@ -1,0 +1,3 @@
+INFO 03-11 12:47:23 [__init__.py:216] Automatically detected platform cuda.
+DSC results added to eval_result.txt: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-100/eval_result.txt
+DSC results added to eval_result_all.txt: experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-100/eval_result_all.txt

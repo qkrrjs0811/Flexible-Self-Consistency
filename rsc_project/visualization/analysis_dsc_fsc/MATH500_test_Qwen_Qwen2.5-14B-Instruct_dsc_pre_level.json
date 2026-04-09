@@ -1,0 +1,165 @@
+{
+  "model": "Qwen/Qwen2.5-14B-Instruct",
+  "dataset": "MATH500_test",
+  "stages_config": "40",
+  "n": 40,
+  "judge_window_size": 24,
+  "window_size": 4,
+  "bootstrap_seed": 137,
+  "trial": 0,
+  "subset_n": 40,
+  "easy_threshold": 0.95,
+  "easy_count": 128,
+  "hard_count": 372,
+  "crosstab": {
+    "easy": {
+      "1": 33,
+      "2": 46,
+      "3": 30,
+      "4": 15,
+      "5": 4
+    },
+    "hard": {
+      "1": 10,
+      "2": 44,
+      "3": 75,
+      "4": 113,
+      "5": 130
+    }
+  },
+  "level_totals": {
+    "1": 43,
+    "2": 90,
+    "3": 105,
+    "4": 128,
+    "5": 134
+  },
+  "dsc_greedy_split_paths_used_by_easy_hard_level": {
+    "easy": {
+      "1": {
+        "n": 33,
+        "mean": 1.0,
+        "min": 1,
+        "max": 1,
+        "histogram": {
+          "1": 33
+        }
+      },
+      "2": {
+        "n": 46,
+        "mean": 1.0,
+        "min": 1,
+        "max": 1,
+        "histogram": {
+          "1": 46
+        }
+      },
+      "3": {
+        "n": 30,
+        "mean": 1.0,
+        "min": 1,
+        "max": 1,
+        "histogram": {
+          "1": 30
+        }
+      },
+      "4": {
+        "n": 15,
+        "mean": 1.0,
+        "min": 1,
+        "max": 1,
+        "histogram": {
+          "1": 15
+        }
+      },
+      "5": {
+        "n": 4,
+        "mean": 1.0,
+        "min": 1,
+        "max": 1,
+        "histogram": {
+          "1": 4
+        }
+      }
+    },
+    "hard": {
+      "1": {
+        "n": 10,
+        "mean": 9.2,
+        "min": 4,
+        "max": 28,
+        "histogram": {
+          "4": 7,
+          "12": 1,
+          "24": 1,
+          "28": 1
+        }
+      },
+      "2": {
+        "n": 44,
+        "mean": 9.818181818181818,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 32,
+          "8": 3,
+          "16": 2,
+          "20": 1,
+          "28": 1,
+          "40": 5
+        }
+      },
+      "3": {
+        "n": 75,
+        "mean": 6.56,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 60,
+          "8": 7,
+          "12": 1,
+          "16": 3,
+          "20": 1,
+          "36": 1,
+          "40": 2
+        }
+      },
+      "4": {
+        "n": 113,
+        "mean": 11.327433628318584,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 71,
+          "8": 11,
+          "12": 6,
+          "16": 3,
+          "20": 2,
+          "28": 3,
+          "32": 1,
+          "36": 2,
+          "40": 14
+        }
+      },
+      "5": {
+        "n": 130,
+        "mean": 16.4,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 61,
+          "8": 11,
+          "12": 11,
+          "16": 1,
+          "20": 4,
+          "24": 3,
+          "28": 3,
+          "32": 2,
+          "36": 2,
+          "40": 32
+        }
+      }
+    }
+  },
+  "output_file": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/visualization/analysis_dsc_fsc/MATH500_test_Qwen_Qwen2.5-14B-Instruct_dsc_pre_level.json"
+}

@@ -1,0 +1,23 @@
+{
+    "system": {
+        "default": "You are a professional specialized in {subject}. You need to help me answer the given question. Notice that you need to solve the question step by step and as detailed as possible. Do not jump to the answer directly. You must follow the response format instruction.",
+        "AIME_2024": "You are a professional specialized in {subject}. Answer the following question. Please reason step by step. After solving the mathematical problem, place the final answer inside \\boxed{{}}",
+        "AIME_2025": "You are a professional specialized in {subject}. Answer the following question. Please reason step by step. After solving the mathematical problem, place the final answer inside \\boxed{{}}",
+        "AMC23": "You are a professional specialized in {subject}. Answer the following question. Please reason step by step. After solving the mathematical problem, place the final answer inside \\boxed{{}}",
+        "MATH500_test": "You are a professional specialized in {subject}. Answer the following question. Please reason step by step. After solving the mathematical problem, place the final answer inside \\boxed{{}}",
+        "GPQA-Diamond": "You are a professional specialized in {subject}. Answer the following question. Please reason step by step, and show your choice in the answer field with only the choice letter, e.g., 'The answer is C.'.",
+        "MMLU-Pro": "You are a professional specialized in {subject}. Answer the following question. Please reason step by step, and show your choice in the answer field with only the choice letter, e.g., 'The answer is (C)'.",
+        "DEEPMATH_2600": "You are a professional specialized in {subject}. Answer the following question. Please reason step by step. After solving the mathematical problem, place the final answer inside \\boxed{{}}",
+        "MATH2500": "You are a professional specialized in {subject}. Answer the following question. Please reason step by step. After solving the mathematical problem, place the final answer inside \\boxed{{}}",
+        "MATH_train": "You are a professional specialized in {subject}. Answer the following question. Please reason step by step. After solving the mathematical problem, place the final answer inside \\boxed{{}}",
+        "GSM8K": "You are a professional specialized in {subject}. Answer the following question. Please reason step by step, and put your final answer within \\boxed{{}}.",
+        "AIME_2024_Qwen3":"You are a professional specialized in {subject}. Answer the following question. Please reason step by step, and put your final answer within \\boxed{{}}.",
+        "AIME_2025_Qwen3":"You are a professional specialized in {subject}. Answer the following question. Please reason step by step, and put your final answer within \\boxed{{}}.",
+        "AMC23_Qwen3":"You are a professional specialized in {subject}. Answer the following question. Please reason step by step, and put your final answer within \\boxed{{}}.",
+        "MATH500_test_Qwen3":"You are a professional specialized in {subject}. Answer the following question. Please reason step by step, and put your final answer within \\boxed{{}}.",
+        "GSM8K_Qwen3":"You are a professional specialized in {subject}. Answer the following question. Please reason step by step, and put your final answer within \\boxed{{}}.",
+        "GPQA-Diamond_Qwen3":"You are a professional specialized in {subject}. Answer the following question. Please reason step by step, and show your choice in the answer field with only the choice letter, e.g., 'The answer is C.'",
+        "MMLU-Pro_Qwen3":"You are a professional specialized in {subject}. Answer the following question. Please reason step by step, and show your choice in the answer field with only the choice letter, e.g., 'The answer is (C)'."
+    },
+    "human": "{fewshot}\n\n{question}"
+}
