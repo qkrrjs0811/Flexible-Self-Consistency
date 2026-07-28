@@ -10,6 +10,7 @@ import sys
 import os
 import json
 import random
+import time
 from collections import defaultdict
 
 # 기존 코드 경로 추가 (src 디렉토리)
@@ -67,6 +68,7 @@ class ReasoningPathGenerator:
         self.is_qwen3 = self._is_qwen3_model(model_name)
         self.is_nemotron = self._is_nemotron_model(model_name)
         self.is_qwen3_or_nemotron = self.is_qwen3 or self.is_nemotron
+        self.is_gemma = 'gemma' in model_name.lower()
         
         # 프롬프트 템플릿 로드
         if prompt_template_path is None:
@@ -101,6 +103,19 @@ class ReasoningPathGenerator:
             )
         else:
             self.tokenizer = tokenizer
+
+    def _get_output_token_count(self, generated_text: str, token_ids: Optional[List[int]]) -> int:
+        """
+        생성 결과의 출력 토큰 수를 계산한다.
+
+        Gemma 계열은 vLLM의 token_ids 길이가 max_tokens로 고정되는 경우가 있어,
+        항상 텍스트를 tokenizer로 재인코딩해 계산한다.
+        """
+        if self.is_gemma:
+            return len(self.tokenizer.encode(generated_text, add_special_tokens=False))
+        if token_ids is not None:
+            return len(token_ids)
+        return len(self.tokenizer.encode(generated_text, add_special_tokens=False))
     
     def _is_qwen3_model(self, model_name: str) -> bool:
         """Qwen3 모델인지 확인 (기존 코드 로직)"""
@@ -215,13 +230,16 @@ class ReasoningPathGenerator:
         input_tokens = len(input_token_ids)
         
         # vLLM으로 생성
+        gen_start = time.perf_counter()
         outputs = self.llm.generate([prompt], sampling_params)
+        latency_sec = time.perf_counter() - gen_start
         
         # 결과 추출 (토큰 정보 포함)
         paths = []
         token_info = {
             'input_tokens': input_tokens,
-            'output_tokens': []
+            'output_tokens': [],
+            'latency_sec': latency_sec,
         }
         if outputs and len(outputs) > 0:
             for output in outputs[0].outputs:
@@ -229,11 +247,7 @@ class ReasoningPathGenerator:
                 paths.append(generated_text)
                 # 각 출력의 토큰 수 계산
                 token_ids = getattr(output, "token_ids", None)
-                if token_ids is not None:
-                    tokens_used = len(token_ids)
-                else:
-                    # token_ids가 없는 경우 (gemma 모델 등) 생성된 텍스트를 토크나이저로 인코딩하여 계산
-                    tokens_used = len(self.tokenizer.encode(generated_text, add_special_tokens=False))
+                tokens_used = self._get_output_token_count(generated_text, token_ids)
                 token_info['output_tokens'].append(tokens_used)
         
         return paths, token_info
@@ -326,8 +340,12 @@ class ReasoningPathGenerator:
             # 디버그: 실제로 몇 개의 프롬프트를 한 번에 전달하는지 확인
             if len(batch_prompts) > 0:
                 print(f"[배치 처리] vLLM에 {len(batch_prompts)}개 프롬프트를 한 번에 전달 (각 프롬프트마다 {n_paths}개 path 생성)")
+            batch_gen_start = time.perf_counter()
             outputs = self.llm.generate(batch_prompts, sampling_params)
-            print(f"[배치 처리 완료] {len(outputs)}개 출력 수신 (예상: {len(batch_prompts)}개)")
+            batch_elapsed = time.perf_counter() - batch_gen_start
+            per_sample_latency = batch_elapsed / max(1, len(batch_prompts))
+            print(f"[배치 처리 완료] {len(outputs)}개 출력 수신 (예상: {len(batch_prompts)}개, "
+                  f"batch={batch_elapsed:.2f}s, per_sample={per_sample_latency:.4f}s)")
             
             # 배치 결과 저장
             batch_paths = []
@@ -341,7 +359,8 @@ class ReasoningPathGenerator:
                 
                 token_info = {
                     'input_tokens': input_tokens,
-                    'output_tokens': []
+                    'output_tokens': [],
+                    'latency_sec': per_sample_latency,
                 }
                 
                 if output and len(output.outputs) > 0:
@@ -349,11 +368,7 @@ class ReasoningPathGenerator:
                         generated_text = gen_output.text.strip()
                         paths.append(generated_text)
                         token_ids = getattr(gen_output, "token_ids", None)
-                        if token_ids is not None:
-                            tokens_used = len(token_ids)
-                        else:
-                            # token_ids가 없는 경우 (gemma 모델 등) 생성된 텍스트를 토크나이저로 인코딩하여 계산
-                            tokens_used = len(self.tokenizer.encode(generated_text, add_special_tokens=False))
+                        tokens_used = self._get_output_token_count(generated_text, token_ids)
                         token_info['output_tokens'].append(tokens_used)
                 
                 batch_paths.append(paths)
@@ -496,7 +511,7 @@ class ReasoningPathGenerator:
                 paths.append(output.text.strip())
                 # 각 출력의 토큰 수 계산
                 token_ids = getattr(output, "token_ids", None)
-                tokens_used = len(token_ids) if token_ids is not None else None
+                tokens_used = self._get_output_token_count(paths[-1], token_ids)
                 token_info['output_tokens'].append(tokens_used)
         
         return paths, token_info
@@ -578,11 +593,7 @@ class ReasoningPathGenerator:
                 refined_paths.append(refined_path)
                 # 각 출력의 토큰 수 계산
                 token_ids = getattr(output.outputs[0], "token_ids", None)
-                if token_ids is not None:
-                    tokens_used = len(token_ids)
-                else:
-                    # token_ids가 없는 경우 (gemma 모델 등) 생성된 텍스트를 토크나이저로 인코딩하여 계산
-                    tokens_used = len(self.tokenizer.encode(refined_path, add_special_tokens=False))
+                tokens_used = self._get_output_token_count(refined_path, token_ids)
                 token_info['output_tokens'].append(tokens_used)
             else:
                 # 생성 실패 시 원본 path 사용
@@ -720,9 +731,10 @@ class ReasoningPathGenerator:
                 
                 if output and len(output.outputs) > 0:
                     for gen_output in output.outputs:
-                        paths.append(gen_output.text.strip())
+                        generated_text = gen_output.text.strip()
+                        paths.append(generated_text)
                         token_ids = getattr(gen_output, "token_ids", None)
-                        tokens_used = len(token_ids) if token_ids is not None else None
+                        tokens_used = self._get_output_token_count(generated_text, token_ids)
                         token_info['output_tokens'].append(tokens_used)
                 
                 all_paths.append(paths)
@@ -824,7 +836,7 @@ class ReasoningPathGenerator:
                         refined_path = output.outputs[0].text.strip()
                         refined_paths.append(refined_path)
                         token_ids = getattr(output.outputs[0], "token_ids", None)
-                        tokens_used = len(token_ids) if token_ids is not None else None
+                        tokens_used = self._get_output_token_count(refined_path, token_ids)
                         output_tokens_list.append(tokens_used)
                     else:
                         refined_paths.append("")

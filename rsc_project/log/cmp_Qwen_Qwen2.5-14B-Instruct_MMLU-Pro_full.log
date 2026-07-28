@@ -1,0 +1,36 @@
+INFO 05-27 16:28:29 [__init__.py:216] Automatically detected platform cuda.
+Auto-generated SC sample path: experiments/results/Qwen/Qwen2.5-14B-Instruct/stages-40/Stage1/MMLU-Pro_full.json
+Auto-generated eval path: experiments/results/Qwen/Qwen2.5-14B-Instruct/stages-40/dsc_eval/MMLU-Pro_full_Qwen_Qwen2.5-14B-Instruct_eval_strategy_random_prompt_short_batchsize_8_iter_5_n_1_temp_0.jsonl
+[INFO] Using tokenizer for model: Qwen/Qwen2.5-14B-Instruct
+unmatch count=0
+greedy unmatch count=0
+easy count=0
+hard count=12032
+Step 2 processed problems: 12032 / 12032
+[Prepare Step 2] Easy/Hard split time: 0.08s
+
+============================================================
+Output path: experiments/results/Qwen/Qwen2.5-14B-Instruct/stages-40/dsc_cmp/MMLU-Pro_full_Qwen_Qwen2.5-14B-Instruct_n_40_judge_window_24_interplot_16.json
+============================================================
+easy count=0
+hard count=12032
+Step 2 processed problems: 12032 / 12032
+greedy easy count=26
+greedy hard count=12006
+DSC_hard: Samples=13.14, Prepare(Total=2244.40 avg, Input=635.98 avg, Output=1608.42 avg), Inference(Input=889.43, Output=5853.71, Total=6743.15), Acc=0.6736
+DSC: Samples=13.40, Prepare(Total=2244.40 avg, Input=635.98 avg, Output=1608.42 avg), Inference(Input=907.51, Output=5979.63, Total=6887.14), Acc=0.6739
+DSC_greedy: Samples=13.47, Prepare(Total=2244.40 avg, Input=635.98 avg, Output=1608.42 avg), Inference(Input=910.70, Output=5993.45, Total=6904.15), Acc=0.6739
+DSC_window: Samples=15.20, Prepare(Total=2244.40 avg, Input=635.98 avg, Output=1608.42 avg), Inference(Input=432.94, Output=6781.67, Total=7214.61), Acc=0.6740
+DSC_pre: Samples=15.13, Prepare(Total=2244.40 avg, Input=635.98 avg, Output=1608.42 avg), Inference(Input=429.74, Output=6767.85, Total=7197.59), Acc=0.6740
+
+Prepare 상세 정보:
+  Step 1 (Difficulty Ranking) time=4526.32s
+  Step 2 (Easy/Hard Split) time=0.08s
+  Prepare Total time=4526.39s (Step 1 + Step 2)
+  Step 1 (Difficulty Ranking, 문제당 평균) input_token=381.49 output_token=10.73
+  Step 2 (Problem Partition, 문제당 평균) input_token=254.48 output_token=1597.69
+  Prepare (문제당 평균) total_token=2244.40 input_token=635.98 output_token=1608.42
+  Prepare (전체 합계) input_token=7652097 output_token=19352551 time=4526.39s
+Done! Result saved to experiments/results/Qwen/Qwen2.5-14B-Instruct/stages-40/dsc_cmp/MMLU-Pro_full_Qwen_Qwen2.5-14B-Instruct_n_40_judge_window_24_interplot_16.json
+DSC results added to eval_result.txt: experiments/results/Qwen/Qwen2.5-14B-Instruct/stages-40/eval_result.txt
+[MMLU-Pro_full] 카테고리별 DSC 집계 저장: /home/albert0811/dev_env/git/repos/RASC/rsc_project/experiments/results/Qwen/Qwen2.5-14B-Instruct/stages-40/MMLU-Pro_full_metrics_by_category.json

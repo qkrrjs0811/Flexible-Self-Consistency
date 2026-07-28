@@ -5,10 +5,11 @@
   "n": 40,
   "judge_window_size": 24,
   "window_size": 4,
+  "interplot_size": 16,
   "bootstrap_seed": 137,
   "trial": 0,
   "subset_n": 40,
-  "easy_threshold": 0.95,
+  "dsc_method": "dsc_pre",
   "easy_count": 142,
   "hard_count": 358,
   "crosstab": {
@@ -38,71 +39,89 @@
     "easy": {
       "1": {
         "n": 21,
-        "mean": 1.0,
-        "min": 1,
-        "max": 1,
+        "mean": 4.0,
+        "min": 4,
+        "max": 4,
         "histogram": {
-          "1": 21
+          "4": 21
         }
       },
       "2": {
         "n": 27,
-        "mean": 1.0,
-        "min": 1,
-        "max": 1,
+        "mean": 8.148148148148149,
+        "min": 4,
+        "max": 40,
         "histogram": {
-          "1": 27
+          "4": 22,
+          "12": 1,
+          "16": 1,
+          "24": 1,
+          "40": 2
         }
       },
       "3": {
         "n": 33,
-        "mean": 1.0,
-        "min": 1,
-        "max": 1,
+        "mean": 6.424242424242424,
+        "min": 4,
+        "max": 40,
         "histogram": {
-          "1": 33
+          "4": 30,
+          "12": 1,
+          "40": 2
         }
       },
       "4": {
         "n": 28,
-        "mean": 1.0,
-        "min": 1,
-        "max": 1,
+        "mean": 10.571428571428571,
+        "min": 4,
+        "max": 40,
         "histogram": {
-          "1": 28
+          "4": 18,
+          "8": 3,
+          "12": 2,
+          "16": 1,
+          "40": 4
         }
       },
       "5": {
         "n": 33,
-        "mean": 1.0,
-        "min": 1,
-        "max": 1,
+        "mean": 19.515151515151516,
+        "min": 4,
+        "max": 40,
         "histogram": {
-          "1": 33
+          "4": 11,
+          "12": 3,
+          "16": 4,
+          "20": 4,
+          "32": 2,
+          "36": 1,
+          "40": 8
         }
       }
     },
     "hard": {
       "1": {
         "n": 22,
-        "mean": 4.181818181818182,
+        "mean": 4.545454545454546,
         "min": 4,
-        "max": 8,
+        "max": 12,
         "histogram": {
-          "4": 21,
-          "8": 1
+          "4": 20,
+          "8": 1,
+          "12": 1
         }
       },
       "2": {
         "n": 63,
-        "mean": 8.253968253968255,
+        "mean": 8.444444444444445,
         "min": 4,
         "max": 40,
         "histogram": {
           "4": 51,
-          "8": 3,
+          "8": 2,
           "12": 1,
           "16": 1,
+          "20": 1,
           "28": 1,
           "36": 1,
           "40": 5
@@ -110,54 +129,57 @@
       },
       "3": {
         "n": 72,
-        "mean": 9.0,
+        "mean": 9.5,
         "min": 4,
         "max": 40,
         "histogram": {
-          "4": 53,
+          "4": 51,
           "8": 3,
-          "12": 4,
-          "16": 2,
-          "20": 1,
+          "12": 2,
+          "16": 5,
+          "20": 2,
           "28": 4,
           "40": 5
         }
       },
       "4": {
         "n": 100,
-        "mean": 12.44,
+        "mean": 13.72,
         "min": 4,
         "max": 40,
         "histogram": {
-          "4": 60,
-          "8": 6,
-          "12": 5,
-          "16": 4,
-          "20": 6,
+          "4": 52,
+          "8": 4,
+          "12": 9,
+          "16": 7,
+          "20": 8,
           "24": 2,
           "28": 1,
           "36": 1,
-          "40": 15
+          "40": 16
         }
       },
       "5": {
         "n": 101,
-        "mean": 15.881188118811881,
+        "mean": 17.14851485148515,
         "min": 4,
         "max": 40,
         "histogram": {
-          "4": 50,
-          "8": 11,
-          "12": 3,
-          "16": 3,
-          "20": 2,
-          "24": 2,
+          "4": 42,
+          "8": 10,
+          "12": 7,
+          "16": 4,
+          "20": 4,
+          "24": 3,
           "28": 2,
           "32": 4,
-          "40": 24
+          "40": 25
         }
       }
     }
   },
+  "stage1_path": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/experiments/results/google/gemma-3-4b-it/stages-40/Stage1/MATH500_test.json",
+  "eval_path": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/experiments/results/google/gemma-3-4b-it/stages-40/dsc_eval/MATH500_test_google_gemma-3-4b-it_eval_strategy_random_prompt_short_batchsize_8_iter_5_n_1_temp_0.jsonl",
+  "samples_total": 500,
   "output_file": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/visualization/analysis_dsc_fsc/MATH500_test_google_gemma-3-4b-it_dsc_pre_level.json"
 }

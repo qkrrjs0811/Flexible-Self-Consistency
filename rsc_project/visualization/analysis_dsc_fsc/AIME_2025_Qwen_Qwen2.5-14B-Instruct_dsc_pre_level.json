@@ -1,0 +1,48 @@
+{
+  "model": "Qwen/Qwen2.5-14B-Instruct",
+  "dataset": "AIME_2025",
+  "stages_config": "40",
+  "n": 40,
+  "judge_window_size": 24,
+  "window_size": 4,
+  "interplot_size": 16,
+  "bootstrap_seed": 137,
+  "trial": 0,
+  "subset_n": 40,
+  "dsc_method": "dsc_pre",
+  "easy_count": 0,
+  "hard_count": 30,
+  "crosstab": {
+    "hard": {
+      "unknown": 30
+    }
+  },
+  "level_totals": {
+    "unknown": 30
+  },
+  "dsc_greedy_split_paths_used_by_easy_hard_level": {
+    "hard": {
+      "unknown": {
+        "n": 30,
+        "mean": 27.2,
+        "min": 4,
+        "max": 40,
+        "histogram": {
+          "4": 5,
+          "8": 1,
+          "12": 1,
+          "16": 2,
+          "20": 2,
+          "24": 1,
+          "28": 3,
+          "36": 1,
+          "40": 14
+        }
+      }
+    }
+  },
+  "stage1_path": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/experiments/results/Qwen/Qwen2.5-14B-Instruct/stages-40/Stage1/AIME_2025.json",
+  "eval_path": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/experiments/results/Qwen/Qwen2.5-14B-Instruct/stages-40/dsc_eval/AIME_2025_Qwen_Qwen2.5-14B-Instruct_eval_strategy_random_prompt_short_batchsize_8_iter_5_n_1_temp_0.jsonl",
+  "samples_total": 30,
+  "output_file": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/visualization/analysis_dsc_fsc/AIME_2025_Qwen_Qwen2.5-14B-Instruct_dsc_pre_level.json"
+}

@@ -65,6 +65,18 @@ MODEL_PLOT_ORDER_SUBSTR: List[str] = [
     "gemma-3-4b",
 ]
 
+# 모델 막대 파스텔 팔레트 (반복 사용)
+PASTEL_COLORS: List[str] = [
+    "#5DA5DA",  # muted blue
+    "#F17CB0",  # muted pink
+    "#B291C7",  # muted purple
+    "#F5A45D",  # muted orange
+    "#60BD68",  # muted green
+    "#B276B2",  # medium violet
+    "#DECF3F",  # mustard yellow
+    "#4D4D4D",  # dark gray
+]
+
 
 def _skip_model_rel(rel: str) -> bool:
     """Llama 계열(meta-llama 등)은 시각화에서 제외."""
@@ -84,14 +96,24 @@ def _set_latex_paper_mpl_style() -> None:
             ],
             "mathtext.fontset": "cm",
             "mathtext.default": "regular",
+            "figure.facecolor": "#ffffff",
+            "axes.facecolor": "#ffffff",
+            "axes.edgecolor": "#2d3a4b",
+            "axes.labelcolor": "#000000",
+            "xtick.color": "#000000",
+            "ytick.color": "#000000",
+            "grid.color": "#c7c1b8",
+            "grid.linewidth": 1.0,
+            "axes.grid": False,
             "axes.labelsize": 18,
             "axes.titlesize": 19,
             "axes.titleweight": "normal",
+            "axes.labelweight": "normal",
             "xtick.labelsize": 15,
             "ytick.labelsize": 15,
-            "legend.fontsize": 14,
+            "legend.fontsize": 15,
             "axes.unicode_minus": False,
-            "axes.linewidth": 0.9,
+            "axes.linewidth": 2.2,
         }
     )
 
@@ -225,9 +247,19 @@ def _summarize(vals: List[int]) -> dict:
     return {"mean": float(np.mean(a)), "n": len(vals)}
 
 
+# 모델 범례 표시 이름 (rel 경로 basename → 표시용)
+MODEL_DISPLAY_NAMES: Dict[str, str] = {
+    "Qwen2.5-3B-Instruct": "Qwen2.5-3B",
+    "Qwen2.5-7B-Instruct": "Qwen2.5-7B",
+    "Qwen2.5-14B-Instruct": "Qwen2.5-14B",
+    "gemma-3-4b-it": "Gemma-3-4B",
+}
+
+
 def _short_model_label(rel_path: str) -> str:
     """표시용 짧은 이름 (마지막 경로 조각)."""
-    return os.path.basename(rel_path.rstrip("/"))
+    base = os.path.basename(rel_path.rstrip("/"))
+    return MODEL_DISPLAY_NAMES.get(base, base)
 
 
 def ordered_model_rel_paths(rel_paths: Iterable[str]) -> List[str]:
@@ -261,36 +293,105 @@ def plot_grouped_models_by_level(
         width = min(0.8 / n_models, 0.14)
     offsets = (np.arange(n_models) - (n_models - 1) / 2.0) * width * 1.15
 
-    fig, ax = plt.subplots(figsize=(11, 6))
+    fig, ax = plt.subplots(figsize=(10.2, 6.6))
+    fig.patch.set_facecolor("#ffffff")
+    ax.set_facecolor("#ffffff")
 
+    ymax_obs = 0.0
     for mi, model in enumerate(models):
         ys: List[float] = []
         for lv in LEVELS:
             s = summaries[model].get(lv, {})
             ys.append(float(s.get("mean", float("nan"))))
-        color = f"C{mi % 10}"
+        color = PASTEL_COLORS[mi % len(PASTEL_COLORS)]
         xpos = x + offsets[mi]
         ys_plot = [0.0 if (isinstance(v, float) and np.isnan(v)) else v for v in ys]
+        if ys_plot:
+            ymax_obs = max(ymax_obs, max(ys_plot))
         ax.bar(
             xpos,
             ys_plot,
-            width * 0.95,
+            width * 0.98,
             label=_short_model_label(model),
             color=color,
-            alpha=0.88,
-            edgecolor="black",
-            linewidth=0.4,
+            alpha=0.93,
+            edgecolor="#f4f4f4",
+            linewidth=1.1,
+            zorder=3,
         )
+        # 막대 값 annotation: 레벨별 격차를 정량으로 읽기 쉽게 보조
+        for xv, yv in zip(xpos, ys_plot):
+            if yv > 0:
+                ax.text(
+                    xv,
+                    yv + max(0.12, 0.012 * max(ymax_obs, 1.0)),
+                    f"{yv:.1f}",
+                    ha="center",
+                    va="bottom",
+                    fontsize=10.5,
+                    color="#000000",
+                    zorder=5,
+                )
 
     ax.set_xticks(x)
     ax.set_xticklabels([f"Level {lv}" for lv in LEVELS])
     ax.set_ylabel(ylabel)
-    if n_models > 1:
-        ax.legend(loc="upper left", frameon=True, ncol=min(2, n_models))
-    ax.grid(axis="y", alpha=0.35, linestyle="--", linewidth=0.7)
-    ax.set_ylim(bottom=0)
+    # 가장 쉬운/어려운 구간을 옅게 강조해 난이도 대비를 직관적으로 표현
+    ax.axvspan(x[0] - 0.5, x[0] + 0.5, color="#c8ddd0", alpha=0.52, zorder=0)   # Easy
+    ax.axvspan(x[1] - 0.5, x[-2] + 0.5, color="#ecebe7", alpha=0.35, zorder=0)  # Moderate
+    ax.axvspan(x[-1] - 0.5, x[-1] + 0.5, color="#edd0d0", alpha=0.52, zorder=0) # Hard
+    ax.text(
+        x[0],
+        (ymax_obs * 1.06) if ymax_obs > 0 else 1.0,
+        "Easy",
+        ha="center",
+        va="bottom",
+        fontsize=11,
+        color="#4f7a60",
+    )
+    ax.text(
+        x[len(x) // 2],
+        (ymax_obs * 1.06) if ymax_obs > 0 else 1.0,
+        "Moderate",
+        ha="center",
+        va="bottom",
+        fontsize=11,
+        color="#6f6a5d",
+    )
+    ax.text(
+        x[-1],
+        (ymax_obs * 1.06) if ymax_obs > 0 else 1.0,
+        "Hard",
+        ha="center",
+        va="bottom",
+        fontsize=11,
+        color="#9a4f4f",
+    )
 
-    plt.tight_layout()
+    ax.tick_params(axis="x", which="major", labelsize=15, colors="#000000", pad=8, width=1.8, length=6)
+    ax.tick_params(axis="y", which="major", labelsize=15, colors="#000000", pad=8, width=1.8, length=0)
+
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_color("#2d3a4b")
+    ax.spines["bottom"].set_color("#2d3a4b")
+    ax.spines["left"].set_linewidth(2.2)
+    ax.spines["bottom"].set_linewidth(2.2)
+
+    if n_models > 1:
+        ax.legend(
+            loc="upper center",
+            bbox_to_anchor=(0.5, 1.08),
+            frameon=False,
+            ncol=n_models,
+            handlelength=1.6,
+            columnspacing=1.4,
+        )
+    ax.grid(axis="y", alpha=0.95, color="#c7c1b8", linestyle="-", linewidth=1.0, zorder=1)
+    ax.grid(axis="x", visible=False)
+    ax.set_ylim(bottom=0, top=max(1.0, ymax_obs * 1.18))
+
+    plt.tight_layout(rect=[0.0, 0.0, 1.0, 0.97])
     os.makedirs(os.path.dirname(os.path.abspath(output_path)) or ".", exist_ok=True)
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close()
@@ -298,14 +399,16 @@ def plot_grouped_models_by_level(
 
 
 def _default_png_paths(vis_dir: str, slug_stages: str, metric: str) -> str:
+    script_name = os.path.splitext(os.path.basename(__file__))[0]
+    out_dir = os.path.join(vis_dir, script_name)
     if metric == "full_sc":
         return os.path.join(
-            vis_dir,
+            out_dir,
             f"sc_consensus_chains_by_level_full_sc_all_{slug_stages}.png",
         )
     if metric == "gold":
         return os.path.join(
-            vis_dir,
+            out_dir,
             f"sc_consensus_chains_by_level_gold_all_{slug_stages}.png",
         )
     raise ValueError(metric)

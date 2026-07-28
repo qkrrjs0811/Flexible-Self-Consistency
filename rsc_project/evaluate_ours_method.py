@@ -37,6 +37,59 @@ MODELS = ["Qwen2.5-3B-Instruct", "Qwen2.5-7B-Instruct", "Qwen2.5-14B-Instruct", 
 # MODELS = ["meta-llama/Llama-3.1-8B-Instruct"]
 
 # ============================================================================
+# 실험 설정: 사용할 데이터셋 목록
+# ============================================================================
+# None이면 probe 폴더의 모든 데이터셋을 처리합니다.
+# eval_result.txt 섹션명 기준 (run_all_cmp.sh DATASETS와 동일).
+# probe JSON basename(MATH500 등)과 다른 경우 PROBE_TO_EVAL_DATASET 으로 자동 매핑됩니다.
+DATASETS = [
+    "MATH500_test",
+    "AMC23",
+    "AIME_2024",
+    "AIME_2025",
+    "MMLU-Pro",
+    "MMLU-Pro_full",
+    "GPQA-Diamond",
+]
+# DATASETS = None  # probe의 모든 데이터셋
+
+# probe JSON basename -> eval_result.txt / Stage1 JSON 이름
+PROBE_TO_EVAL_DATASET = {
+    "MATH500": "MATH500_test",
+}
+EVAL_TO_PROBE_DATASET = {v: k for k, v in PROBE_TO_EVAL_DATASET.items()}
+
+# ============================================================================
+
+
+def probe_to_eval_dataset_name(probe_dataset: str) -> str:
+    """probe JSON basename -> eval_result.txt 섹션명."""
+    return PROBE_TO_EVAL_DATASET.get(probe_dataset, probe_dataset)
+
+
+def dataset_matches_selection(probe_dataset: str,
+                              selected_datasets: Optional[List[str]],
+                              cli_dataset: Optional[str]) -> bool:
+    """probe JSON basename 기준으로 DATASETS / --dataset 필터."""
+    eval_name = probe_to_eval_dataset_name(probe_dataset)
+
+    def _aliases(name: str) -> set:
+        names = {name}
+        if name in PROBE_TO_EVAL_DATASET:
+            names.add(PROBE_TO_EVAL_DATASET[name])
+        if name in EVAL_TO_PROBE_DATASET:
+            names.add(EVAL_TO_PROBE_DATASET[name])
+        return names
+
+    if cli_dataset is not None:
+        allowed = _aliases(cli_dataset)
+        return probe_dataset in allowed or eval_name in allowed
+    if selected_datasets is None:
+        return True
+    allowed = set()
+    for ds in selected_datasets:
+        allowed.update(_aliases(ds))
+    return probe_dataset in allowed or eval_name in allowed
 
 
 def _is_qwen3_model(model_name: str) -> bool:
@@ -51,6 +104,22 @@ def _is_nemotron_model(model_name: str) -> bool:
     return 'nemotron' in model_name_lower or 'nvidia-nemotron' in model_name_lower
 
 
+def _infer_model_and_p_from_path(path: str) -> Optional[Tuple[str, str]]:
+    """
+    경로를 상위로 올라가며 .../{model_name}/p_* 구조를 찾는다.
+    p_* 바로 아래뿐 아니라 p_*/subdir/*.json 형태도 지원.
+    """
+    cur = os.path.abspath(path)
+    while cur and cur != os.path.dirname(cur):
+        base = os.path.basename(cur)
+        if base.startswith("p_"):
+            model_name = os.path.basename(os.path.dirname(cur))
+            if model_name:
+                return model_name, base
+        cur = os.path.dirname(cur)
+    return None
+
+
 def load_probe_data(probe_dir: str) -> Dict[str, Dict[str, Dict[str, Dict[str, int]]]]:
     """
     probe 폴더에서 데이터 로드
@@ -58,6 +127,8 @@ def load_probe_data(probe_dir: str) -> Dict[str, Dict[str, Dict[str, Dict[str, i
     폴더 구조:
     - probe/.../{model_name}/{p_value}/{dataset_name}.json
       예: probe/math2500/gemma-3-4b-it/p_1.0/GSM8K.json
+    - probe/.../{model_name}/{p_value}/{subdir}/{dataset_name}.json
+      예: probe/math/gemma-3-4b-it/p_1.0/gemma_new_sampling_eval/MATH500.json
     
     각 JSON 파일은 리스트 형태: [{"id": "...", "number_of_paths": N, ...}, ...]
     
@@ -92,16 +163,12 @@ def load_probe_data(probe_dir: str) -> Dict[str, Dict[str, Dict[str, Dict[str, i
                 sample_dict[sample_id] = int(number_of_paths)
         return sample_dict if sample_dict else None
 
-    # probe_dir 하위 어디서든 .../{model_name}/{p_value}/*.json 구조를 탐색
+    # probe_dir 하위 JSON을 탐색하고, 상위 경로에서 model/p_* 를 추론
     for root, dirs, files in os.walk(probe_dir):
-        p_value = os.path.basename(root)
-        if not p_value.startswith("p_"):
+        inferred = _infer_model_and_p_from_path(root)
+        if inferred is None:
             continue
-
-        model_dir = os.path.dirname(root)
-        model_name = os.path.basename(model_dir)
-        if not model_name:
-            continue
+        model_name, p_value = inferred
 
         for filename in files:
             if not filename.endswith(".json"):
@@ -137,13 +204,8 @@ def find_sc40_json(results_dir: str, model_name: str, dataset_name: str,
     Returns:
         Optional[str]: JSON 파일 경로 (없으면 None)
     """
-    # 데이터셋 이름 매핑 (probe 폴더 이름 -> results 폴더 이름)
-    dataset_name_map = {
-        'MATH500': 'MATH500_test'
-    }
-    
-    # 매핑된 데이터셋 이름 사용
-    actual_dataset_name = dataset_name_map.get(dataset_name, dataset_name)
+    # probe 폴더 이름 -> results / eval_result.txt 이름
+    actual_dataset_name = probe_to_eval_dataset_name(dataset_name)
     
     # 가능한 경로들 (여러 패턴 시도)
     possible_paths = []
@@ -239,6 +301,16 @@ def find_sc40_json(results_dir: str, model_name: str, dataset_name: str,
     return None
 
 
+
+
+def probe_p_dirname(p: float) -> str:
+    """probe 하위 폴더명 (p_1.0, p_0.75 등)."""
+    if float(p).is_integer():
+        return f"p_{int(float(p))}.0"
+    text = f"{float(p):g}"
+    if "." not in text:
+        text = f"{float(p):.1f}".rstrip("0").rstrip(".")
+    return f"p_{text}"
 
 
 def calculate_n_sc(number_of_paths: int, max_n: int = 40) -> int:
@@ -890,7 +962,8 @@ Loaded {metrics.get('total_samples', 0)} samples
 def process_single_dataset(results_dir: str, model_name: str, dataset_name: str,
                           number_of_paths_dict: Dict[str, int], stages_config: str = "stages-40",
                           metric_name: str = "Ours",
-                          run_single: bool = False) -> Optional[Dict[str, Any]]:
+                          run_single: bool = False,
+                          eval_result_dir: Optional[str] = None) -> Optional[Dict[str, Any]]:
     """
     단일 모델/데이터셋에 대해 처리
     
@@ -900,10 +973,13 @@ def process_single_dataset(results_dir: str, model_name: str, dataset_name: str,
         dataset_name: 데이터셋 이름
         number_of_paths_dict: 샘플 ID -> number_of_paths 값 매핑
         stages_config: stages 설정
+        eval_result_dir: 지정 시 eval_result.txt / eval_result_all.txt 를 이 디렉터리에 저장
         
     Returns:
         Dict: 처리 결과 (성공 시), None (실패 시)
     """
+    eval_dataset_name = probe_to_eval_dataset_name(dataset_name)
+
     # SC(n=40) 파일 찾기
     input_json = find_sc40_json(results_dir, model_name, dataset_name, stages_config)
     if input_json is None:
@@ -941,68 +1017,63 @@ def process_single_dataset(results_dir: str, model_name: str, dataset_name: str,
     if stats['missing_count'] > 0:
         print(f"    경고: number_of_paths 값이 없는 샘플 {stats['missing_count']}개 (기본값 40 사용)")
     
-    # 평가 수행 (부트스트래핑 적용, Ours만 측정, JSON 파일 생성 없이 동적 샘플링)
     pool_size = extract_pool_size_from_stages_config(stages_config)
-    metrics = evaluate_ours_json(
-        input_json,
-        dataset_name,
-        number_of_paths_dict,
-        pool_size=pool_size,
-        subset_n=40,
-        num_trials=1,
-        max_n=40,
-    )
-    
-    # eval_result.txt 경로 찾기
-    # run_eval.py와 동일한 경로 구조: results_dir/model_name/[mode_subdir]/stages_config/eval_result.txt
-    # 입력 JSON 파일 경로에서 실제 모델 경로 추출
-    input_parts = input_json.split(os.sep)
-    
-    # results_dir 다음 경로부터 추출
-    try:
-        results_dir_basename = os.path.basename(results_dir.rstrip(os.sep))
-        if results_dir_basename in input_parts:
-            results_idx = input_parts.index(results_dir_basename)
-        else:
-            # results_dir이 절대 경로인 경우
-            results_idx = -1
-            for i, part in enumerate(input_parts):
-                if 'results' in part.lower():
-                    results_idx = i
-                    break
+
+    # eval_result.txt 경로
+    # - --eval_result_dir 지정 시: 해당 디렉터리에 직접 저장
+    # - 미지정 시: results_dir/model_name/[mode_subdir]/stages_config/eval_result.txt
+    if eval_result_dir:
+        eval_result_path = os.path.join(eval_result_dir, 'eval_result.txt')
+        eval_result_all_path = os.path.join(eval_result_dir, 'eval_result_all.txt')
+    else:
+        # 입력 JSON 파일 경로에서 실제 모델 경로 추출
+        input_parts = input_json.split(os.sep)
         
-        if results_idx >= 0:
-            # results_dir 다음이 모델 이름 (예: "Qwen")
-            # 그 다음이 실제 모델 이름 (예: "Qwen2.5-7B-Instruct") 또는 mode_subdir
-            model_base_parts = []
-            idx = results_idx + 1
-            while idx < len(input_parts) and input_parts[idx] not in [stages_config, 'Stage1', 'Stage2']:
-                model_base_parts.append(input_parts[idx])
-                idx += 1
-            
-            # model_base_parts에서 mode_subdir 제거 (thinking/non-thinking)
-            filtered_parts = [p for p in model_base_parts if p not in ['thinking', 'non-thinking']]
-            if filtered_parts:
-                # 실제 모델 경로 구성 (예: "Qwen/Qwen2.5-7B-Instruct")
-                actual_model_path = os.path.join(*filtered_parts)
-                model_base_dir = os.path.join(results_dir, actual_model_path)
+        # results_dir 다음 경로부터 추출
+        try:
+            results_dir_basename = os.path.basename(results_dir.rstrip(os.sep))
+            if results_dir_basename in input_parts:
+                results_idx = input_parts.index(results_dir_basename)
             else:
-                # 추출 실패 시 원본 방식 사용
+                # results_dir이 절대 경로인 경우
+                results_idx = -1
+                for i, part in enumerate(input_parts):
+                    if 'results' in part.lower():
+                        results_idx = i
+                        break
+            
+            if results_idx >= 0:
+                # results_dir 다음이 모델 이름 (예: "Qwen")
+                # 그 다음이 실제 모델 이름 (예: "Qwen2.5-7B-Instruct") 또는 mode_subdir
+                model_base_parts = []
+                idx = results_idx + 1
+                while idx < len(input_parts) and input_parts[idx] not in [stages_config, 'Stage1', 'Stage2']:
+                    model_base_parts.append(input_parts[idx])
+                    idx += 1
+                
+                # model_base_parts에서 mode_subdir 제거 (thinking/non-thinking)
+                filtered_parts = [p for p in model_base_parts if p not in ['thinking', 'non-thinking']]
+                if filtered_parts:
+                    # 실제 모델 경로 구성 (예: "Qwen/Qwen2.5-7B-Instruct")
+                    actual_model_path = os.path.join(*filtered_parts)
+                    model_base_dir = os.path.join(results_dir, actual_model_path)
+                else:
+                    # 추출 실패 시 원본 방식 사용
+                    model_base_dir = os.path.join(results_dir, model_name)
+            else:
                 model_base_dir = os.path.join(results_dir, model_name)
-        else:
+        except:
+            # 오류 발생 시 원본 방식 사용
             model_base_dir = os.path.join(results_dir, model_name)
-    except:
-        # 오류 발생 시 원본 방식 사용
-        model_base_dir = os.path.join(results_dir, model_name)
-    
-    # thinking/non-thinking 모드 확인
-    if 'thinking' in input_parts or 'non-thinking' in input_parts:
-        mode_subdir = 'thinking' if 'thinking' in input_parts else 'non-thinking'
-        model_base_dir = os.path.join(model_base_dir, mode_subdir)
-    
-    # eval_result.txt 경로: model_base_dir/stages_config/eval_result.txt
-    eval_result_path = os.path.join(model_base_dir, stages_config, 'eval_result.txt')
-    eval_result_all_path = os.path.join(model_base_dir, stages_config, 'eval_result_all.txt')
+        
+        # thinking/non-thinking 모드 확인
+        if 'thinking' in input_parts or 'non-thinking' in input_parts:
+            mode_subdir = 'thinking' if 'thinking' in input_parts else 'non-thinking'
+            model_base_dir = os.path.join(model_base_dir, mode_subdir)
+        
+        # eval_result.txt 경로: model_base_dir/stages_config/eval_result.txt
+        eval_result_path = os.path.join(model_base_dir, stages_config, 'eval_result.txt')
+        eval_result_all_path = os.path.join(model_base_dir, stages_config, 'eval_result_all.txt')
 
     # ------------------------------------------------------------------
     # 단일 실험 모드: eval_result.txt는 수정하지 않고, eval_single_{seed}.txt에만 기록
@@ -1055,52 +1126,51 @@ def process_single_dataset(results_dir: str, model_name: str, dataset_name: str,
 
     # 스킵 로직
     if run_single:
-        if _has_metric_in_file(eval_result_path, dataset_name, metric_name):
-            print(f"      [스킵] {metric_name}의 {dataset_name} 결과가 이미 작성되어 있습니다. (eval_single)")
+        if _has_metric_in_file(eval_result_path, eval_dataset_name, metric_name):
+            print(f"      [스킵] {metric_name}의 {eval_dataset_name} 결과가 이미 작성되어 있습니다. (eval_single)")
             return {
                 'model_name': model_name,
-                'dataset_name': dataset_name,
+                'dataset_name': eval_dataset_name,
                 'metrics': {},
                 'stats': stats,
                 'skipped': True
             }
     else:
         # eval_result_all.txt가 아예 없거나, 그 안에 기록이 없는 경우에만 실행 (스킵 방지)
-        if _has_metric_in_file(eval_result_path, dataset_name, metric_name) and os.path.exists(eval_result_all_path):
-            if _has_metric_in_file(eval_result_all_path, dataset_name, metric_name):
-                print(f"      [스킵] {metric_name}의 {dataset_name} 결과가 이미 작성되어 있습니다.")
+        if _has_metric_in_file(eval_result_path, eval_dataset_name, metric_name) and os.path.exists(eval_result_all_path):
+            if _has_metric_in_file(eval_result_all_path, eval_dataset_name, metric_name):
+                print(f"      [스킵] {metric_name}의 {eval_dataset_name} 결과가 이미 작성되어 있습니다.")
                 return {
                     'model_name': model_name,
-                    'dataset_name': dataset_name,
+                    'dataset_name': eval_dataset_name,
                     'metrics': {},
                     'stats': stats,
                     'skipped': True
                 }
 
     # 평가 수행 (부트스트래핑 적용, Ours만 측정, JSON 파일 생성 없이 동적 샘플링)
-        pool_size = extract_pool_size_from_stages_config(stages_config)
-        metrics = evaluate_ours_json(
-            input_json,
-            dataset_name,
-            number_of_paths_dict,
-            pool_size=pool_size,
-            subset_n=40,
-            max_n=40,
-        )
-        
-        # 결과 저장 (input_json은 참고용으로만 사용)
-    save_eval_result(eval_result_path, dataset_name, input_json, metrics, metric_name=metric_name)
+    metrics = evaluate_ours_json(
+        input_json,
+        eval_dataset_name,
+        number_of_paths_dict,
+        pool_size=pool_size,
+        subset_n=40,
+        num_trials=1,
+        max_n=40,
+    )
+
+    save_eval_result(eval_result_path, eval_dataset_name, input_json, metrics, metric_name=metric_name)
     if not run_single:
         if 'trial_accuracies' in metrics:
-            save_eval_result_all(eval_result_all_path, dataset_name, metrics['trial_accuracies'], metric_name=metric_name)
+            save_eval_result_all(eval_result_all_path, eval_dataset_name, metrics['trial_accuracies'], metric_name=metric_name)
             if 'trial_avg_chains' in metrics:
-                save_eval_result_all(eval_result_all_path, dataset_name, metrics['trial_avg_chains'], metric_name=f"{metric_name} Chains", fmt=".2f")
+                save_eval_result_all(eval_result_all_path, eval_dataset_name, metrics['trial_avg_chains'], metric_name=f"{metric_name} Chains", fmt=".2f")
             if 'trial_avg_input_tokens' in metrics:
-                save_eval_result_all(eval_result_all_path, dataset_name, metrics['trial_avg_input_tokens'], metric_name=f"{metric_name} Input Tokens", fmt=".2f")
+                save_eval_result_all(eval_result_all_path, eval_dataset_name, metrics['trial_avg_input_tokens'], metric_name=f"{metric_name} Input Tokens", fmt=".2f")
             if 'trial_avg_output_tokens' in metrics:
-                save_eval_result_all(eval_result_all_path, dataset_name, metrics['trial_avg_output_tokens'], metric_name=f"{metric_name} Output Tokens", fmt=".2f")
+                save_eval_result_all(eval_result_all_path, eval_dataset_name, metrics['trial_avg_output_tokens'], metric_name=f"{metric_name} Output Tokens", fmt=".2f")
 
-    if dataset_name in ("MMLU-Pro", "MMLU-Pro_full") and metrics.get("ours_accuracy") is not None:
+    if eval_dataset_name in ("MMLU-Pro", "MMLU-Pro_full") and metrics.get("ours_accuracy") is not None:
         try:
             from evaluation.mmlu_pro_category_aggregate import merge_mmlu_pro_category_section
 
@@ -1109,7 +1179,7 @@ def process_single_dataset(results_dir: str, model_name: str, dataset_name: str,
                 _nt = 1
             _cat_ours = evaluate_mmlu_pro_ours_by_category_from_data(
                 data,
-                dataset_name,
+                eval_dataset_name,
                 number_of_paths_dict,
                 pool_size=pool_size,
                 subset_n=40,
@@ -1120,16 +1190,16 @@ def process_single_dataset(results_dir: str, model_name: str, dataset_name: str,
                 os.path.dirname(eval_result_path),
                 "ours",
                 _cat_ours,
-                dataset_name=dataset_name,
+                dataset_name=eval_dataset_name,
                 extra_meta={"source": "evaluate_ours_method", "stages_config": stages_config},
             )
-            print(f"[{dataset_name}] 카테고리별 Ours 집계 저장: {_agg_path}")
+            print(f"[{eval_dataset_name}] 카테고리별 Ours 집계 저장: {_agg_path}")
         except Exception as _e:
-            print(f"[경고] {dataset_name} 카테고리별 Ours 집계 저장 실패: {_e}")
+            print(f"[경고] {eval_dataset_name} 카테고리별 Ours 집계 저장 실패: {_e}")
     
     return {
         'model_name': model_name,
-        'dataset_name': dataset_name,
+        'dataset_name': eval_dataset_name,
         'metrics': metrics,
         'stats': stats
     }
@@ -1152,7 +1222,15 @@ def main():
     parser.add_argument('--model', type=str, default=None,
                        help='특정 모델만 처리 (기본값: None, 모든 모델 처리)')
     parser.add_argument('--dataset', type=str, default=None,
-                       help='특정 데이터셋만 처리 (기본값: None, 모든 데이터셋 처리)')
+                       help='특정 데이터셋만 처리 (eval_result.txt 섹션명 또는 probe JSON basename, '
+                            '기본값: None → 상단 DATASETS 리스트 사용)')
+    parser.add_argument('--ours_p', type=float, default=1.0,
+                       help='Ours probe p 값 (기본값: 1.0 → p_1.0). --all_p_values 지정 시 무시됩니다.')
+    parser.add_argument('--all_p_values', action='store_true',
+                       help='probe에 있는 모든 p_* 디렉터리를 평가 (기본: --ours_p 하나만)')
+    parser.add_argument('--eval_result_dir', type=str, default=None,
+                       help='eval_result.txt / eval_result_all.txt 저장 디렉터리 '
+                            '(기본값: None → results_dir/{model}/stages-*/ 에 저장)')
     
     args = parser.parse_args()
 
@@ -1167,6 +1245,7 @@ def main():
         return v
 
     args.stages_config = normalize_stages_config(args.stages_config)
+    target_p_value = None if args.all_p_values else probe_p_dirname(args.ours_p)
     
     # 프로젝트 루트 (rsc_project) 기준 경로 설정
     project_root = os.path.dirname(os.path.abspath(__file__))
@@ -1192,6 +1271,16 @@ def main():
         results_dir = os.path.join(project_root, args.results_dir)
     else:
         results_dir = args.results_dir
+
+    # eval 결과 저장 디렉터리 (선택)
+    eval_result_dir = None
+    if args.eval_result_dir:
+        if not os.path.isabs(args.eval_result_dir):
+            eval_result_dir = os.path.join(project_root, args.eval_result_dir)
+        else:
+            eval_result_dir = args.eval_result_dir
+        os.makedirs(eval_result_dir, exist_ok=True)
+        print(f"eval 결과 저장 경로: {eval_result_dir}")
     
     # probe 데이터 로드
     print(f"probe 디렉토리에서 데이터 로드: {probe_dir}")
@@ -1202,6 +1291,18 @@ def main():
         return
     
     print(f"  로드된 모델 수 (probe 기준): {len(probe_data)}")
+    if target_p_value is not None:
+        print(f"  Ours p 필터: {target_p_value} (--all_p_values 로 전체 p 평가 가능)")
+    else:
+        print("  Ours p 필터: 없음 (모든 p_* 디렉터리 평가)")
+
+    selected_datasets = None if args.dataset is not None else DATASETS
+    if args.dataset is not None:
+        print(f"  데이터셋 필터 (--dataset): {args.dataset}")
+    elif selected_datasets is not None:
+        print(f"  데이터셋 필터 (DATASETS): {selected_datasets}")
+    else:
+        print("  데이터셋 필터: 없음 (probe의 모든 데이터셋)")
     
     # results 디렉토리에서 실제 존재하는 모델 경로 탐색 (정보용)
     if os.path.isdir(results_dir):
@@ -1278,13 +1379,16 @@ def main():
 
         # p_value별로 평가하고 eval_result.txt에 p별 라인으로 기록
         for p_value, ds_map in datasets.items():
+            if target_p_value is not None and p_value != target_p_value:
+                continue
             for dataset_name, number_of_paths_dict in ds_map.items():
-                if args.dataset is not None and dataset_name != args.dataset:
+                if not dataset_matches_selection(dataset_name, selected_datasets, args.dataset):
                     continue
 
                 metric_name = f"Ours_{probe_group_name}({p_value})"
                 print(f"\n    p 값: {p_value}")
-                print(f"    데이터셋: {dataset_name}")
+                eval_label = probe_to_eval_dataset_name(dataset_name)
+                print(f"    데이터셋: {dataset_name}" + (f" -> {eval_label}" if eval_label != dataset_name else ""))
                 print(f"      number_of_paths 값: {len(number_of_paths_dict)}개")
 
                 result = process_single_dataset(
@@ -1292,6 +1396,7 @@ def main():
                     stages_config=args.stages_config,
                     metric_name=metric_name,
                     run_single=args.run_single,
+                    eval_result_dir=eval_result_dir,
                 )
 
                 if result:

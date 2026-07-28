@@ -14,6 +14,8 @@ import sys
 import argparse
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyArrowPatch
+from matplotlib.patches import Polygon
+from matplotlib.lines import Line2D
 import numpy as np
 from typing import Dict, List, Tuple, Optional
 from math import ceil, sqrt
@@ -32,6 +34,15 @@ def _set_latex_paper_mpl_style() -> None:
             ],
             "mathtext.fontset": "cm",
             "mathtext.default": "regular",
+            "figure.facecolor": "#ffffff",
+            "axes.facecolor": "#ffffff",
+            "axes.edgecolor": "#2d3a4b",
+            "axes.labelcolor": "#000000",
+            "xtick.color": "#000000",
+            "ytick.color": "#000000",
+            "grid.color": "#bcbcbc",
+            "grid.linewidth": 1.0,
+            "axes.grid": False,
             "axes.unicode_minus": False,
         }
     )
@@ -57,6 +68,21 @@ DATASET_DISPLAY_NAMES = {
     'MMLU-Pro': 'MMLU-Pro',
 }
 # ============================================================================
+
+def _apply_reference_like_style(ax, x_min: float, x_max: float, y_min: float, y_max: float) -> None:
+    """첨부 이미지 느낌의 미니멀 스타일과 좌상단 강조 영역 적용."""
+    ax.set_facecolor("#ffffff")
+
+    ax.grid(axis="y", linestyle="-", alpha=0.95, linewidth=1.0)
+    ax.grid(axis="x", visible=False)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_linewidth(2.2)
+    ax.spines["bottom"].set_linewidth(2.2)
+    ax.spines["left"].set_color("#2d3a4b")
+    ax.spines["bottom"].set_color("#2d3a4b")
+    ax.tick_params(axis="both", labelsize=13, length=6, width=1.8, colors="#000000")
+
 
 def _split_summary_by_model(text: str) -> List[Tuple[str, str]]:
     """
@@ -213,7 +239,12 @@ def parse_summary_single_file(file_path: str) -> Dict[str, Dict[str, Dict[str, f
     return all_results
 
 
-def create_grid_visualization(all_results: Dict, output_path: str, dataset_filter: List[str] = None):
+def create_grid_visualization(
+    all_results: Dict,
+    output_path: str,
+    dataset_filter: List[str] = None,
+    single_plot: bool = False,
+):
     """
     그리드 형태의 Chain 수 vs Accuracy 시각화 생성
     
@@ -221,11 +252,11 @@ def create_grid_visualization(all_results: Dict, output_path: str, dataset_filte
     """
     # 방법론별 색상 및 마커
     method_styles = {
-        'SC': {'color': '#95a5a6', 'marker': 'o', 'label': 'SC', 'alpha': 0.7},
-        'ESC': {'color': '#3498db', 'marker': 's', 'label': 'ESC', 'alpha': 0.7},
-        'AC': {'color': '#e67e22', 'marker': '^', 'label': 'AC', 'alpha': 0.7},
-        'DSC': {'color': '#9b59b6', 'marker': 'v', 'label': 'DSC', 'alpha': 0.7},
-        'Ours': {'color': '#2ecc71', 'marker': 'D', 'label': 'FSC (Ours)', 'alpha': 1.0}
+        'SC': {'color': '#1f77b4', 'marker': 'o', 'label': 'SC', 'alpha': 0.95},      # blue
+        'AC': {'color': '#ff7f0e', 'marker': 'o', 'label': 'AC', 'alpha': 0.95},      # orange
+        'ESC': {'color': '#2ca02c', 'marker': 'o', 'label': 'ESC', 'alpha': 0.95},    # green
+        'DSC': {'color': '#d62728', 'marker': 'X', 'label': 'DSC', 'alpha': 0.95},    # red
+        'Ours': {'color': '#9467bd', 'marker': 'o', 'label': 'FSC (Ours)', 'alpha': 1.0}  # purple
     }
     
     # legend 항목 순서 요청: SC, AC, ESC, DSC, Ours
@@ -268,6 +299,242 @@ def create_grid_visualization(all_results: Dict, output_path: str, dataset_filte
     if n_datasets == 0:
         print("Error: 시각화할 데이터가 없습니다.")
         return
+
+    if single_plot:
+        fig, ax = plt.subplots(1, 1, figsize=(11, 7))
+        fig.patch.set_facecolor("#ffffff")
+
+        all_points = []
+        for dataset_name in datasets:
+            data = dataset_data[dataset_name]
+            for method in methods:
+                if method in data:
+                    all_points.append((data[method]["chains"], data[method]["accuracy"]))
+
+        if not all_points:
+            print("Error: 단일 플롯 시각화용 데이터가 없습니다.")
+            return
+
+        x_values = [p[0] for p in all_points]
+        y_values = [p[1] for p in all_points]
+        x_min, x_max = min(x_values), max(x_values)
+        x_margin = (x_max - x_min) * 0.08 if x_max > x_min else max(1.0, x_max * 0.2 if x_max > 0 else 1.0)
+        y_min, y_max = min(y_values), max(y_values)
+        y_margin = max((y_max - y_min) * 0.35, 8.0)
+        global_ymin = max(0.0, y_min - y_margin)
+        global_ymax = min(100.0, y_max + y_margin)
+
+        _apply_reference_like_style(
+            ax,
+            max(0, x_min - x_margin),
+            x_max + x_margin,
+            global_ymin,
+            global_ymax,
+        )
+
+        method_to_marker = {
+            "SC": "o",
+            "AC": "^",
+            "ESC": "s",
+            "DSC": "X",
+            "Ours": "D",
+        }
+        cmap = plt.get_cmap("tab10")
+        dataset_to_color = {ds: cmap(i % 10) for i, ds in enumerate(datasets)}
+        baseline_methods = ["SC", "AC", "ESC", "DSC"]
+        fsc_reductions_by_method = {m: [] for m in baseline_methods}
+        fsc_points = []
+
+        for dataset_name in datasets:
+            data = dataset_data[dataset_name]
+            ds_color = dataset_to_color[dataset_name]
+            dataset_points = []
+            if "Ours" in data:
+                ours_chains = data["Ours"]["chains"]
+                for baseline in baseline_methods:
+                    if baseline in data and data[baseline]["chains"] > 0:
+                        base_chains = data[baseline]["chains"]
+                        reduction = (base_chains - ours_chains) / base_chains * 100.0
+                        fsc_reductions_by_method[baseline].append(reduction)
+
+            for method in methods:
+                if method not in data:
+                    continue
+                style = method_styles[method]
+                chains = data[method]["chains"]
+                accuracy = data[method]["accuracy"]
+                dataset_points.append((chains, accuracy))
+                if method == "Ours":
+                    fsc_points.append((chains, accuracy))
+
+                ax.scatter(
+                    chains,
+                    accuracy,
+                    color=style["color"],
+                    marker=method_to_marker.get(method, "o"),
+                    s=190,
+                    alpha=0.95,
+                    edgecolors=ds_color,
+                    linewidths=2.2,
+                    zorder=5 if method == "Ours" else 3,
+                )
+
+                # 방법론 인식 강화를 위해 모든 점에 축약 라벨 표시
+                ax.annotate(
+                    style["label"].replace("FSC (Ours)", "FSC"),
+                    (chains, accuracy),
+                    xytext=(0, -13),
+                    textcoords="offset points",
+                    fontsize=9.8,
+                    color=style["color"],
+                    ha="center",
+                    va="top",
+                    zorder=6,
+                )
+
+                if method == "Ours":
+                    # 겹치는 AIME 라벨은 방향을 분리해 가독성 확보
+                    label_offsets = {
+                        "AIME2024": (-12, 0),
+                        "AIME2025": (0, 16),
+                    }
+                    dx, dy = label_offsets.get(dataset_name, (7, 7))
+                    ax.annotate(
+                        dataset_name,
+                        (chains, accuracy),
+                        xytext=(dx, dy),
+                        textcoords="offset points",
+                        fontsize=11,
+                        color=ds_color,
+                        ha="right" if dx < 0 else "left",
+                        va="bottom" if dy >= 0 else "top",
+                        bbox=dict(
+                            boxstyle="round,pad=0.28",
+                            facecolor="white",
+                            edgecolor=ds_color,
+                            alpha=0.85,
+                            linewidth=1.2,
+                        ),
+                        zorder=6,
+                    )
+
+            if len(dataset_points) >= 2:
+                # 방법론 순서 대신 x축(chains) 기준으로 왼쪽 -> 오른쪽 연결
+                dataset_points = sorted(dataset_points, key=lambda p: p[0])
+                ds_x = [p[0] for p in dataset_points]
+                ds_y = [p[1] for p in dataset_points]
+                ax.plot(
+                    ds_x,
+                    ds_y,
+                    linestyle="--",
+                    linewidth=1.9,
+                    color=ds_color,
+                    alpha=0.55,
+                    zorder=2,
+                )
+
+        # FSC 포인트들을 따라가는 효율 영역(노란색) 추가
+        if len(fsc_points) >= 2:
+            x_left = max(0, x_min - x_margin)
+            x_right = x_max + x_margin
+            fsc_sorted = sorted(fsc_points, key=lambda p: p[0])
+            y_pad = (global_ymax - global_ymin) * 0.03
+
+            top_path = [(x_left, global_ymax)]
+            top_path.extend([(x, min(global_ymax, y + y_pad)) for x, y in fsc_sorted])
+
+            # 영역을 x축(현재 y축 하한)까지 내리기
+            bottom_y = global_ymin
+            right_x = min(x_right, max(x for x, _ in fsc_sorted) * 1.08)
+
+            zone_points = top_path + [(right_x, bottom_y), (x_left, bottom_y)]
+            zone = Polygon(
+                zone_points,
+                closed=True,
+                facecolor="#f2cc63",
+                edgecolor="none",
+                alpha=0.22,
+                zorder=1,
+            )
+            ax.add_patch(zone)
+            ax.text(
+                x_left + (x_right - x_left) * 0.01,
+                global_ymax - (global_ymax - global_ymin) * 0.02,
+                "Most sample-efficient",
+                fontsize=18,
+                fontweight="bold",
+                color="#c48a00",
+                ha="left",
+                va="top",
+                zorder=2,
+            )
+
+        ax.set_xlim([max(0, x_min - x_margin), x_max + x_margin])
+        ax.set_ylim([global_ymin, global_ymax])
+        ax.set_xlabel("Number of Chains", fontsize=18, fontweight="normal")
+        ax.set_ylabel("Accuracy (%)", fontsize=18, fontweight="normal")
+
+        # 좌하단 빈 영역에 FSC 효율성 요약 패널 추가
+        avg_reductions = {
+            m: (np.mean(vals) if vals else 0.0) for m, vals in fsc_reductions_by_method.items()
+        }
+        panel_text = (
+            "Avg Chain Reduction (FSC)\n"
+            f"- vs SC: {avg_reductions['SC']:.1f}%\n"
+            f"- vs AC: {avg_reductions['AC']:.1f}%\n"
+            f"- vs ESC: {avg_reductions['ESC']:.1f}%\n"
+            f"- vs DSC: {avg_reductions['DSC']:.1f}%"
+        )
+        ax.text(
+            0.03,
+            0.06,
+            panel_text,
+            transform=ax.transAxes,
+            fontsize=15,
+            ha="left",
+            va="bottom",
+            color="#4b2e83",
+            bbox=dict(
+                boxstyle="round,pad=0.80",
+                facecolor="#f5efff",
+                edgecolor=method_styles["Ours"]["color"],
+                linewidth=2.1,
+                alpha=0.9,
+            ),
+            zorder=7,
+        )
+
+        method_handles = [
+            Line2D(
+                [0],
+                [0],
+                marker=method_to_marker.get(m, "o"),
+                color="none",
+                markerfacecolor=method_styles[m]["color"],
+                markeredgecolor="#333333",
+                markersize=11,
+                label=method_styles[m]["label"],
+            )
+            for m in methods
+        ]
+
+        legend1 = ax.legend(
+            handles=method_handles,
+            loc="upper left",
+            bbox_to_anchor=(1.02, 1.0),
+            frameon=False,
+            fontsize=10.5,
+            title="Method (color)",
+            title_fontsize=11.5,
+            borderaxespad=0.0,
+        )
+        ax.add_artist(legend1)
+
+        plt.tight_layout(rect=[0, 0, 0.82, 1])
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        print(f"단일 플롯 시각화 저장 완료: {output_path}")
+        plt.close()
+        return
     
     # 데이터셋이 4개일 때 2x2 그리드, 그 외에는 한 줄(1 x n)
     if n_datasets == 4:
@@ -277,6 +544,7 @@ def create_grid_visualization(all_results: Dict, output_path: str, dataset_filte
     
     # 그래프 생성
     fig, axes = plt.subplots(n_rows, n_cols, figsize=(5 * n_cols, 4 * n_rows))
+    fig.patch.set_facecolor("#ffffff")
     
     # axes를 항상 2D 배열로 만들기
     if n_datasets == 1:
@@ -317,6 +585,15 @@ def create_grid_visualization(all_results: Dict, output_path: str, dataset_filte
         
         data = dataset_data[dataset_name]
         
+        # 첨부 이미지 느낌의 배경/축 스타일
+        x_vals = [v['chains'] for v in data.values()]
+        x_min = min(x_vals) if x_vals else 0.0
+        x_max = max(x_vals) if x_vals else 1.0
+        x_margin = (x_max - x_min) * 0.1 if x_max > x_min else max(1.0, x_max * 0.2 if x_max > 0 else 1.0)
+        local_xmin = max(0, x_min - x_margin)
+        local_xmax = x_max + x_margin
+        _apply_reference_like_style(ax, local_xmin, local_xmax, global_ymin, global_ymax)
+
         # 각 방법론별로 점 표시
         for method in methods:
             if method in data:
@@ -324,28 +601,37 @@ def create_grid_visualization(all_results: Dict, output_path: str, dataset_filte
                 chains = data[method]['chains']
                 accuracy = data[method]['accuracy']  # summary에서는 이미 % 단위
                 
-                # 점 크기 (요청: 전반적으로 기호 크게)
-                size = 170
+                # 점 크기 (첨부 이미지 톤 반영)
+                size = 130
                 
                 ax.scatter(chains, accuracy,
                           color=style['color'],
                           marker=style['marker'],
                           s=size,
                           alpha=style['alpha'],
-                          edgecolors='white',
-                          linewidths=1.5,
+                          edgecolors='#f4f4f4' if method != 'DSC' else '#111111',
+                          linewidths=1.2,
                           label=style['label'],
                           zorder=5 if method == 'Ours' else 3)
+
+                ax.annotate(
+                    style['label'],
+                    (chains, accuracy),
+                    xytext=(8, 0),
+                    textcoords='offset points',
+                    fontsize=10,
+                    color='#1f1f1f',
+                    ha='left',
+                    va='center',
+                    zorder=6,
+                )
         
         # 서브플롯 제목
-        ax.set_title(dataset_name, fontsize=12, fontweight='bold', pad=10)
-        
-        # 그리드
-        ax.grid(True, alpha=0.3, linestyle='--', linewidth=0.5)
+        ax.set_title(dataset_name, fontsize=15, fontweight='normal', pad=10)
         
         # 축 라벨: 모든 서브플롯에 동일하게 표기
-        ax.set_ylabel('Accuracy (%)', fontsize=10, fontweight='bold')
-        ax.set_xlabel('Number of Chains', fontsize=10, fontweight='bold')
+        ax.set_ylabel('Accuracy (%)', fontsize=13, fontweight='normal')
+        ax.set_xlabel('Number of Examples', fontsize=13, fontweight='normal')
         
         # Y축 범위 설정 (전체 데이터셋의 공통 범위 사용)
         ax.set_ylim([global_ymin, global_ymax])
@@ -425,11 +711,12 @@ def create_grid_visualization(all_results: Dict, output_path: str, dataset_filte
                            alpha=0.6,
                            zorder=2)
                     
-                    # 3. 두 점선을 연결하는 수평 실선 (화살표 포함)
+                    # 3. 두 점선을 연결하는 수평 점선 화살표
                     arrow = FancyArrowPatch(
                         (comp_chains, connection_y),
                         (ours_chains, connection_y),
                         arrowstyle='->',
+                        linestyle='--',
                         mutation_scale=20,
                         color='#2ecc71',
                         linewidth=2.0,
@@ -492,14 +779,13 @@ def create_grid_visualization(all_results: Dict, output_path: str, dataset_filte
         ordered_labels,
         loc='upper center',
         ncol=5,
-        fontsize=11,
-        frameon=True,
-        framealpha=0.95,
+        fontsize=15,
+        frameon=False,
         bbox_to_anchor=(0.5, 0.95),
     )
     
     # legend 공간 확보
-    plt.tight_layout(rect=[0, 0.04, 1, 0.90])
+    plt.tight_layout(rect=[0, 0.04, 1, 0.87])
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     print(f"그리드 시각화 저장 완료: {output_path}")
     plt.close()
@@ -515,6 +801,8 @@ def main():
                       help='특정 모델만 시각화 (None이면 TARGET_MODEL 사용, 부분 문자열 매칭)')
     parser.add_argument('--datasets', type=str, nargs='+', default=None,
                        help='시각화할 데이터셋 리스트')
+    parser.add_argument('--single_plot', action='store_true',
+                       help='모든 데이터셋을 하나의 플롯으로 통합')
     
     args = parser.parse_args()
     
@@ -525,8 +813,8 @@ def main():
     summary_file = args.summary_file
     script_dir = os.path.dirname(os.path.abspath(__file__))
     if summary_file is None:
-        # 기본값: (이 스크립트와 같은 디렉터리) summary_single_137_stages-100_probe_p1.0.txt
-        summary_file = os.path.join(script_dir, "summary_single_137_stages-100_probe_p1.0.txt")
+        # 기본값: (이 스크립트와 같은 디렉터리) summary_stages-40_p1.0.txt
+        summary_file = os.path.join(script_dir, "summary_stages-40_p1.0.txt")
     elif not os.path.isabs(summary_file):
         # 1) 현재 작업 디렉터리 기준 그대로 존재하면 그대로 사용
         if not os.path.exists(summary_file):
@@ -558,7 +846,8 @@ def main():
     # 출력 경로 설정
     if args.output_file is None:
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        output_file = os.path.join(script_dir, 'chains_vs_accuracy_grid.png')
+        script_name = os.path.splitext(os.path.basename(__file__))[0]
+        output_file = os.path.join(script_dir, script_name, f"{script_name}.png")
     else:
         output_file = args.output_file
     
@@ -572,7 +861,12 @@ def main():
     
     # 시각화 생성
     print(f"\n그리드 시각화 생성 중...")
-    create_grid_visualization(all_results, output_file, dataset_filter=dataset_filter)
+    create_grid_visualization(
+        all_results,
+        output_file,
+        dataset_filter=dataset_filter,
+        single_plot=args.single_plot,
+    )
     
     print("\n완료!")
 

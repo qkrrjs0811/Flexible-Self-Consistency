@@ -5,10 +5,11 @@
   "n": 40,
   "judge_window_size": 24,
   "window_size": 4,
+  "interplot_size": 16,
   "bootstrap_seed": 137,
   "trial": 0,
   "subset_n": 40,
-  "easy_threshold": 0.95,
+  "dsc_method": "dsc_pre",
   "easy_count": 0,
   "hard_count": 500,
   "crosstab": {
@@ -31,45 +32,45 @@
     "hard": {
       "1": {
         "n": 43,
-        "mean": 7.534883720930233,
+        "mean": 8.465116279069768,
         "min": 4,
         "max": 40,
         "histogram": {
-          "4": 31,
-          "8": 5,
-          "12": 3,
+          "4": 27,
+          "8": 6,
+          "12": 5,
           "20": 1,
-          "24": 1,
+          "24": 2,
           "40": 2
         }
       },
       "2": {
         "n": 90,
-        "mean": 8.666666666666666,
+        "mean": 9.466666666666667,
         "min": 4,
         "max": 40,
         "histogram": {
-          "4": 65,
-          "8": 9,
-          "12": 2,
-          "16": 2,
-          "20": 3,
-          "24": 1,
+          "4": 60,
+          "8": 7,
+          "12": 6,
+          "16": 3,
+          "20": 4,
+          "24": 2,
           "28": 1,
           "40": 7
         }
       },
       "3": {
         "n": 105,
-        "mean": 10.438095238095238,
+        "mean": 11.847619047619048,
         "min": 4,
         "max": 40,
         "histogram": {
-          "4": 65,
-          "8": 13,
-          "12": 7,
-          "16": 3,
-          "20": 2,
+          "4": 57,
+          "8": 8,
+          "12": 5,
+          "16": 17,
+          "20": 3,
           "24": 2,
           "32": 1,
           "40": 12
@@ -77,41 +78,44 @@
       },
       "4": {
         "n": 128,
-        "mean": 17.65625,
+        "mean": 18.875,
         "min": 4,
         "max": 40,
         "histogram": {
-          "4": 55,
-          "8": 12,
-          "12": 4,
-          "16": 9,
-          "20": 3,
-          "24": 2,
+          "4": 46,
+          "8": 9,
+          "12": 8,
+          "16": 13,
+          "20": 4,
+          "24": 4,
           "28": 3,
           "32": 4,
-          "36": 2,
+          "36": 3,
           "40": 34
         }
       },
       "5": {
         "n": 134,
-        "mean": 23.761194029850746,
+        "mean": 26.029850746268657,
         "min": 4,
         "max": 40,
         "histogram": {
-          "4": 20,
-          "8": 17,
-          "12": 14,
-          "16": 9,
-          "20": 4,
-          "24": 8,
+          "4": 12,
+          "8": 7,
+          "12": 12,
+          "16": 13,
+          "20": 12,
+          "24": 14,
           "28": 4,
-          "32": 5,
+          "32": 6,
           "36": 2,
-          "40": 51
+          "40": 52
         }
       }
     }
   },
+  "stage1_path": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/Stage1/MATH500_test.json",
+  "eval_path": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/experiments/results/Qwen/Qwen2.5-3B-Instruct/stages-40/dsc_eval/MATH500_test_Qwen_Qwen2.5-3B-Instruct_eval_strategy_random_prompt_short_batchsize_8_iter_5_n_1_temp_0.jsonl",
+  "samples_total": 500,
   "output_file": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/visualization/analysis_dsc_fsc/MATH500_test_Qwen_Qwen2.5-3B-Instruct_dsc_pre_level.json"
 }

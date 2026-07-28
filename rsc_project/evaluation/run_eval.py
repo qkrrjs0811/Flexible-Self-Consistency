@@ -580,6 +580,10 @@ def _print_and_save_eval_results(all_results: Dict[str, Any], config: Dict[str, 
     
     # Stage 1 메트릭 출력 (CoT, SC, AC, ESC)
     if stage1_detailed:
+        if stage1_detailed.get('stage1_latency_sample_count', 0) > 0:
+            log(f"Stage1 Generation Latency: {stage1_detailed['stage1_avg_latency_sec']:.4f}s per sample "
+                f"(avg over {stage1_detailed['stage1_latency_sample_count']} samples)")
+            log("")
         if 'cot_accuracy' in stage1_detailed:
             log(f"CoT Accuracy: {stage1_detailed['cot_accuracy']:.4f} "
                 f"(avg_input_tokens={stage1_detailed.get('cot_avg_input_tokens', 0):.2f}, "
@@ -862,6 +866,9 @@ def _prepare_stage_data(sample: Dict[str, Any], paths: List[str], final_answer: 
             row_dict['input_tokens'] = None
     else:
         row_dict['input_tokens'] = None
+
+    if token_info and token_info.get('latency_sec') is not None:
+        row_dict['latency_sec'] = token_info['latency_sec']
     
     return row_dict
 
@@ -1059,6 +1066,10 @@ def _print_detailed_metrics(metrics: Dict[str, Any]):
     Args:
         metrics: 평가 메트릭 딕셔너리
     """
+    if metrics.get('stage1_latency_sample_count', 0) > 0:
+        print(f"  Stage1 Generation Latency: {metrics['stage1_avg_latency_sec']:.4f}s per sample "
+              f"(avg over {metrics['stage1_latency_sample_count']} samples)")
+
     if 'cot_accuracy' in metrics:
         print(f"  CoT Accuracy: {metrics['cot_accuracy']:.4f} "
               f"(avg_input_tokens={metrics.get('cot_avg_input_tokens', 0):.2f}, "

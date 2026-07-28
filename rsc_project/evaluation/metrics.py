@@ -394,14 +394,17 @@ def prepare_samples(json_data):
     samples = []
     for item in json_data:
         answers, tokens = extract_cot_data(item.get('Reasoning Paths', []))
-        samples.append({
+        sample = {
             'id': item.get('id', ''),
             'question': item.get('question', ''),
             'correct_answer': str(item.get('answer', '')).strip(),
             'input_tokens': item.get('input_tokens', 0),
             'cot_answers': answers,
             'cot_tokens': tokens,
-        })
+        }
+        if item.get('latency_sec') is not None:
+            sample['latency_sec'] = float(item['latency_sec'])
+        samples.append(sample)
     return samples
 
 
@@ -976,6 +979,11 @@ def compute_stage1_metrics_from_samples(
         "sc_n": sc_n_capped,
         "subset_n": subset_n_capped,
     }
+    latency_values = [float(s['latency_sec']) for s in samples if s.get('latency_sec') is not None]
+    metrics["stage1_avg_latency_sec"] = (
+        sum(latency_values) / len(latency_values) if latency_values else 0.0
+    )
+    metrics["stage1_latency_sample_count"] = len(latency_values)
     cot_acc, cot_avg_input, cot_avg_output, cot_trials, cot_trial_chains, cot_trial_input_tokens, cot_trial_output_tokens = calculate_cot(
         samples,
         pool_size=pool_size,
@@ -1071,6 +1079,8 @@ def slim_stage1_metrics_for_aggregate(full: Dict[str, Any]) -> Dict[str, Any]:
         return block
 
     out: Dict[str, Any] = {"sample_count": int(full.get("total_samples", 0))}
+    if full.get("stage1_latency_sample_count", 0) > 0:
+        out["stage1_avg_latency_sec"] = round(float(full["stage1_avg_latency_sec"]), 4)
     b = _acc_block("cot_accuracy", "cot_avg_input_tokens", "cot_avg_output_tokens")
     if b:
         out["CoT"] = b

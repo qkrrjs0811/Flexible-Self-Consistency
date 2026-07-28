@@ -8,7 +8,7 @@ MODELS=("Qwen/Qwen2.5-3B-Instruct" "Qwen/Qwen2.5-7B-Instruct" "Qwen/Qwen2.5-14B-
 # MODELS=("meta-llama/Llama-3.1-8B-Instruct")
 
 # 데이터셋 목록 (MMLU-Pro: 1400 서브샘플, MMLU-Pro_full: HF test 전체)
-DATASETS=("GSM8K" "MATH500_test" "AMC23" "AIME_2024" "AIME_2025" "MMLU-Pro" "MMLU-Pro_full" "GPQA-Diamond")
+DATASETS=("MATH500_test" "AMC23" "AIME_2024" "AIME_2025" "MMLU-Pro" "MMLU-Pro_full" "GPQA-Diamond")
 
 # 설정
 STRATEGY="random"

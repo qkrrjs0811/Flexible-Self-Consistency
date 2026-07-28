@@ -1,0 +1,36 @@
+INFO 05-27 16:30:15 [__init__.py:216] Automatically detected platform cuda.
+Auto-generated SC sample path: experiments/results/google/gemma-3-4b-it/stages-40/Stage1/MMLU-Pro_full.json
+Auto-generated eval path: experiments/results/google/gemma-3-4b-it/stages-40/dsc_eval/MMLU-Pro_full_google_gemma-3-4b-it_eval_strategy_random_prompt_short_batchsize_8_iter_5_n_1_temp_0.jsonl
+[INFO] Using tokenizer for model: google/gemma-3-4b-it
+unmatch count=0
+greedy unmatch count=0
+easy count=0
+hard count=12032
+Step 2 processed problems: 12032 / 12032
+[Prepare Step 2] Easy/Hard split time: 0.28s
+
+============================================================
+Output path: experiments/results/google/gemma-3-4b-it/stages-40/dsc_cmp/MMLU-Pro_full_google_gemma-3-4b-it_n_40_judge_window_24_interplot_16.json
+============================================================
+easy count=11486
+hard count=546
+Step 2 processed problems: 546 / 12032
+greedy easy count=0
+greedy hard count=12032
+DSC_hard: Samples=16.54, Prepare(Total=17031.43 avg, Input=638.23 avg, Output=16393.19 avg), Inference(Input=1111.46, Output=67728.25, Total=68839.71), Acc=0.4663
+DSC: Samples=38.86, Prepare(Total=17031.43 avg, Input=638.23 avg, Output=16393.19 avg), Inference(Input=2493.23, Output=159123.20, Total=161616.43), Acc=0.4653
+DSC_greedy: Samples=16.95, Prepare(Total=17031.43 avg, Input=638.23 avg, Output=16393.19 avg), Inference(Input=1140.51, Output=69393.61, Total=70534.12), Acc=0.4650
+DSC_window: Samples=19.37, Prepare(Total=17031.43 avg, Input=638.23 avg, Output=16393.19 avg), Inference(Input=420.88, Output=79308.78, Total=79729.65), Acc=0.4653
+DSC_pre: Samples=19.37, Prepare(Total=17031.43 avg, Input=638.23 avg, Output=16393.19 avg), Inference(Input=420.88, Output=79308.78, Total=79729.65), Acc=0.4653
+
+Prepare 상세 정보:
+  Step 1 (Difficulty Ranking) time=1816.39s
+  Step 2 (Easy/Hard Split) time=0.28s
+  Prepare Total time=1816.67s (Step 1 + Step 2)
+  Step 1 (Difficulty Ranking, 문제당 평균) input_token=381.92 output_token=13.40
+  Step 2 (Problem Partition, 문제당 평균) input_token=256.32 output_token=16379.79
+  Prepare (문제당 평균) total_token=17031.43 input_token=638.23 output_token=16393.19
+  Prepare (전체 합계) input_token=7679239 output_token=197242916 time=1816.67s
+Done! Result saved to experiments/results/google/gemma-3-4b-it/stages-40/dsc_cmp/MMLU-Pro_full_google_gemma-3-4b-it_n_40_judge_window_24_interplot_16.json
+DSC results added to eval_result.txt: experiments/results/google/gemma-3-4b-it/stages-40/eval_result.txt
+[MMLU-Pro_full] 카테고리별 DSC 집계 저장: /home/albert0811/dev_env/git/repos/RASC/rsc_project/experiments/results/google/gemma-3-4b-it/stages-40/MMLU-Pro_full_metrics_by_category.json

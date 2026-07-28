@@ -1,0 +1,40 @@
+{
+  "method": "Ours",
+  "model": "Qwen/Qwen2.5-14B-Instruct",
+  "dataset": "AIME_2025",
+  "probe_p": 1.0,
+  "max_n_clip": 40,
+  "probe_file": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/probe/math/Qwen2.5-14B-Instruct/p_1.0/AIME_2025.json",
+  "samples_total": 30,
+  "samples_missing_number_of_paths": 0,
+  "paths_used_by_level": {
+    "unknown": {
+      "n": 30,
+      "mean": 26.366666666666667,
+      "min": 11,
+      "max": 40,
+      "histogram": {
+        "11": 1,
+        "12": 1,
+        "17": 1,
+        "18": 2,
+        "22": 2,
+        "23": 1,
+        "24": 3,
+        "26": 3,
+        "28": 2,
+        "29": 4,
+        "30": 1,
+        "31": 4,
+        "32": 1,
+        "33": 2,
+        "34": 1,
+        "40": 1
+      }
+    }
+  },
+  "level_totals": {
+    "unknown": 30
+  },
+  "output_file": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/visualization/analysis_dsc_fsc/AIME_2025_Qwen_Qwen2.5-14B-Instruct_ours_level_paths.json"
+}

@@ -15,6 +15,7 @@ import argparse
 import json
 import os
 import sys
+from collections import Counter
 from typing import Dict, List, Tuple
 
 import matplotlib.pyplot as plt
@@ -48,7 +49,37 @@ if rsc_project_dir and os.path.exists(rsc_project_dir):
 if script_dir not in sys.path:
     sys.path.insert(0, script_dir)
 
-import visualize_answer_diversity as vad
+from evaluation.metrics import extract_cot_data, normalize_answer_eval
+
+
+def analyze_sample(sample: dict) -> dict:
+    """
+    sample 한 개에 대해:
+      - SC majority 기준 정오 판정
+      - 고유 답 개수(원문 문자열 기준)
+    를 계산한다.
+    """
+    paths = sample.get("Reasoning Paths", [])
+    answers, _ = extract_cot_data(paths)
+    if not answers:
+        return {
+            "num_chains": 0,
+            "is_correct": False,
+            "diversity_metrics": {"num_unique_answers": 0},
+        }
+
+    normalized = [normalize_answer_eval(a) for a in answers]
+    majority = Counter(normalized).most_common(1)[0][0] if normalized else ""
+    gt_norm = normalize_answer_eval(sample.get("answer", ""))
+    is_correct = majority == gt_norm
+
+    # 고유 답 개수는 기존 주석 설명대로 정규화 전 원문 기준
+    raw_unique = len(set(str(a).strip() for a in answers if a is not None))
+    return {
+        "num_chains": len(answers),
+        "is_correct": bool(is_correct),
+        "diversity_metrics": {"num_unique_answers": raw_unique},
+    }
 
 
 def _set_latex_paper_mpl_style() -> None:
@@ -65,6 +96,9 @@ def _set_latex_paper_mpl_style() -> None:
             ],
             "mathtext.fontset": "cm",
             "mathtext.default": "regular",
+            "axes.labelcolor": "#000000",
+            "xtick.color": "#000000",
+            "ytick.color": "#000000",
             "axes.labelsize": 21,
             "axes.titlesize": 22,
             "axes.titleweight": "normal",
@@ -81,6 +115,7 @@ def _set_latex_paper_mpl_style() -> None:
 _set_latex_paper_mpl_style()
 
 LEVELS = [1, 2, 3, 4, 5]
+DEFAULT_MODEL = "Qwen/Qwen2.5-7B-Instruct"
 
 
 def _parse_level(sample: dict) -> int | None:
@@ -123,7 +158,7 @@ def aggregate_by_level(json_path: str) -> Tuple[Dict[int, dict], int, int]:
             n_skipped += 1
             continue
 
-        result = vad.analyze_sample(sample, "MATH_train")
+        result = analyze_sample(sample)
         nu = result["diversity_metrics"]["num_unique_answers"]
         if result["num_chains"] == 0:
             n_skipped += 1
@@ -168,65 +203,95 @@ def plot_level_diversity(
 ) -> None:
     n = len(LEVELS)
     x = np.arange(n, dtype=float)
-    width = 0.35
 
     correct_y = [per_level[lv]["correct_mean"] for lv in LEVELS]
     incorrect_y = [per_level[lv]["incorrect_mean"] for lv in LEVELS]
 
-    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+    fig, ax = plt.subplots(1, 1, figsize=(11, 7.5))
+    fig.patch.set_facecolor("white")
+    ax.set_facecolor("white")
 
-    bars_c = ax.bar(
-        x - width / 2,
+    # 첨부 예시 스타일과 유사한 선/마커 강조 표현
+    correct_color = "#2f7fbd"
+    incorrect_color = "#d65a4a"
+    ax.plot(
+        x,
         correct_y,
-        width,
         label="Correct",
-        color="#3498db",
-        alpha=0.85,
-        edgecolor="black",
+        color=correct_color,
+        linewidth=6.0,
+        marker="o",
+        markersize=17,
+        markerfacecolor=correct_color,
+        markeredgecolor="white",
+        markeredgewidth=2.8,
+        zorder=3,
     )
-    bars_i = ax.bar(
-        x + width / 2,
+    ax.plot(
+        x,
         incorrect_y,
-        width,
         label="Incorrect",
-        color="#e74c3c",
-        alpha=0.85,
-        edgecolor="black",
+        color=incorrect_color,
+        linewidth=6.0,
+        marker="o",
+        markersize=17,
+        markerfacecolor=incorrect_color,
+        markeredgecolor="white",
+        markeredgewidth=2.8,
+        zorder=3,
     )
 
-    ax.set_ylabel("Mean number of unique answers")
     ax.set_xticks(x)
     ax.set_xticklabels([f"Level {lv}" for lv in LEVELS])
-    ax.tick_params(axis="both", which="major", labelsize=18)
+    ax.tick_params(axis="x", which="major", labelsize=34, colors="#000000", pad=22, width=2.2, length=9)
+    ax.tick_params(axis="y", which="major", labelsize=32, colors="#000000", pad=10, width=2.2, length=0)
     ax.legend(
-        loc="upper left",
-        frameon=True,
-        fancybox=False,
-        edgecolor="0.3",
-        fontsize=18,
+        loc="upper center",
+        bbox_to_anchor=(0.5, 1.18),
+        ncol=2,
+        frameon=False,
+        fontsize=42,
+        handlelength=1.9,
+        columnspacing=1.7,
     )
-    ax.grid(axis="y", alpha=0.35, linestyle="--", linewidth=0.7)
+    ax.grid(axis="y", alpha=0.9, color="#c7c1b8", linestyle="-", linewidth=3.2)
+    ax.grid(axis="x", visible=False)
+
+    # 예시처럼 좌/하단 축만 남기고 굵게 표현
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_color("#1f2f3f")
+    ax.spines["bottom"].set_color("#1f2f3f")
+    ax.spines["left"].set_linewidth(3.8)
+    ax.spines["bottom"].set_linewidth(3.8)
 
     ymax_data = max(correct_y + incorrect_y) if (correct_y + incorrect_y) else 1.0
-    # 막대 바로 위에 붙이듯 짧은 오프셋 (이전 0.02는 위로 너무 뜸 → 상단 박스선과 겹침 유발)
-    label_gap = max(ymax_data * 0.0045, 0.04)
-    max_text_bottom = ymax_data + label_gap
+    ax.set_ylim(0, ymax_data + max(1.2, ymax_data * 0.22))
 
-    for bars in (bars_c, bars_i):
-        for bar in bars:
-            h = bar.get_height()
-            if h > 0.01 or h == 0.0:
-                ax.text(
-                    bar.get_x() + bar.get_width() / 2.0,
-                    h + label_gap,
-                    f"{h:.2f}",
-                    ha="center",
-                    va="bottom",
-                    fontsize=16
-                )
-
-    # 숫자 꼬리(글자 높이) 위로 여유 — 상단 spine과 겹치지 않게
-    ax.set_ylim(0, max_text_bottom + max(ymax_data * 0.055, 0.55))
+    # 각 점 위에 값 표시(색상별)
+    offset = max(0.18, ymax_data * 0.06)
+    for i, y in enumerate(correct_y):
+        ax.text(
+            x[i],
+            y + offset,
+            f"{y:.2f}",
+            ha="center",
+            va="bottom",
+            fontsize=36,
+            fontweight="bold",
+            color=correct_color,
+        )
+    for i, y in enumerate(incorrect_y):
+        ax.text(
+            x[i],
+            y + offset,
+            f"{y:.2f}",
+            ha="center",
+            va="bottom",
+            fontsize=36,
+            fontweight="bold",
+            color=incorrect_color,
+        )
 
     plt.tight_layout()
     os.makedirs(os.path.dirname(os.path.abspath(output_path)) or ".", exist_ok=True)
@@ -242,6 +307,35 @@ def normalize_stages_config(value: str) -> str:
     if v.isdigit():
         return f"stages-{v}"
     return v
+
+
+def model_to_filename_tag(model: str) -> str:
+    """모델 문자열을 파일명에 안전한 태그로 변환."""
+    s = (model or "").strip()
+    if not s:
+        return "unknown_model"
+    s = s.replace("\\", "/").strip("/")
+    s = s.replace("/", "_")
+    safe_chars = []
+    for ch in s:
+        if ch.isalnum() or ch in {".", "_", "-"}:
+            safe_chars.append(ch)
+        else:
+            safe_chars.append("_")
+    tag = "".join(safe_chars).strip("_")
+    return tag or "unknown_model"
+
+
+def normalize_model_key(model: str) -> str:
+    """
+    모델 문자열 비교용 정규화 키.
+    - 소문자화
+    - 영숫자/._- 외 문자는 제거
+    """
+    s = (model or "").strip().replace("\\", "/")
+    return "".join(
+        ch for ch in s.lower() if ch.isalnum() or ch in {".", "_", "-", "/"}
+    )
 
 
 def find_math_train_for_model(
@@ -270,6 +364,8 @@ def find_math_train_for_model(
 
     # 2) 짧은 이름: .../results/**/<basename>/stages-XX/Stage1/MATH_train.json 이 유일한지 탐색
     target_leaf = os.path.basename(model)
+    model_key = normalize_model_key(model)
+    target_leaf_key = normalize_model_key(target_leaf)
     matches: List[str] = []
     if not os.path.isdir(results_root):
         return None, f"results 디렉터리 없음: {results_root}"
@@ -282,7 +378,14 @@ def find_math_train_for_model(
         model_dir = os.path.dirname(os.path.dirname(root))
         leaf = os.path.basename(model_dir)
         rel = os.path.relpath(model_dir, results_root).replace("\\", "/")
-        if leaf == target_leaf or rel == model:
+        leaf_key = normalize_model_key(leaf)
+        rel_key = normalize_model_key(rel)
+        if (
+            leaf == target_leaf
+            or rel == model
+            or leaf_key == target_leaf_key
+            or rel_key == model_key
+        ):
             matches.append(os.path.join(root, "MATH_train.json"))
 
     if len(matches) == 1:
@@ -329,8 +432,12 @@ def main() -> None:
     parser.add_argument(
         "--model",
         type=str,
-        default=None,
-        help="experiments/results 기준 모델 경로 또는 폴더명. 예: Qwen/Qwen2.5-7B-Instruct 또는 Qwen2.5-7B-Instruct(유일할 때)",
+        default=DEFAULT_MODEL,
+        help=(
+            "experiments/results 기준 모델 경로 또는 폴더명. "
+            f"기본값: {DEFAULT_MODEL}. "
+            "예: Qwen/Qwen2.5-7B-Instruct 또는 Qwen2.5-7B-Instruct(유일할 때)"
+        ),
     )
     parser.add_argument(
         "--stages_config",
@@ -379,7 +486,9 @@ def main() -> None:
     else:
         vis_dir = os.path.join(rsc_project_dir or script_dir, "visualization")
         os.makedirs(vis_dir, exist_ok=True)
-        out = os.path.join(vis_dir, "answer_diversity_math_by_level.png")
+        model_tag = model_to_filename_tag(args.model)
+        script_name = os.path.splitext(os.path.basename(__file__))[0]
+        out = os.path.join(vis_dir, script_name, f"{script_name}_{model_tag}.png")
 
     plot_level_diversity(per_level, out)
     print("완료.")

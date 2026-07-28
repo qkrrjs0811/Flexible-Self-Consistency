@@ -6,7 +6,7 @@ MODELS=("Qwen/Qwen2.5-3B-Instruct" "Qwen/Qwen2.5-7B-Instruct" "Qwen/Qwen2.5-14B-
 # 데이터셋 목록
 # DATASETS=("AIME_2025")
 # MMLU-Pro_full은 RSC Stage1·dsc_eval 산출물 경로가 MMLU-Pro와 별도(MMLU-Pro_full.json)입니다.
-DATASETS=("GSM8K" "MATH500_test" "AMC23" "AIME_2024" "AIME_2025" "MMLU-Pro" "MMLU-Pro_full" "GPQA-Diamond")
+DATASETS=("MATH500_test" "AMC23" "AIME_2024" "AIME_2025" "MMLU-Pro" "MMLU-Pro_full" "GPQA-Diamond")
 
 # 설정
 STRATEGY="random"

@@ -1,4 +1,4 @@
-INFO 03-30 10:55:07 [__init__.py:216] Automatically detected platform cuda.
+INFO 05-27 16:29:49 [__init__.py:216] Automatically detected platform cuda.
 Auto-generated SC sample path: experiments/results/google/gemma-3-4b-it/stages-40/Stage1/AIME_2024.json
 Auto-generated eval path: experiments/results/google/gemma-3-4b-it/stages-40/dsc_eval/AIME_2024_google_gemma-3-4b-it_eval_strategy_random_prompt_short_batchsize_8_iter_5_n_1_temp_0.jsonl
 [INFO] Using tokenizer for model: google/gemma-3-4b-it
@@ -16,20 +16,20 @@ easy count=0
 hard count=30
 Step 2 processed problems: 30 / 30
 greedy easy count=0
-greedy hard count=0
-DSC_hard: Samples=28.53, Prepare(Total=8642.37 avg, Input=748.77 avg, Output=7893.60 avg), Inference(Input=1107.87, Output=54377.87, Total=55485.73), Acc=0.1333
-DSC: Samples=29.87, Prepare(Total=8642.37 avg, Input=748.77 avg, Output=7893.60 avg), Inference(Input=1149.20, Output=57472.10, Total=58621.30), Acc=0.1333
-DSC_greedy: Samples=29.87, Prepare(Total=8642.37 avg, Input=748.77 avg, Output=7893.60 avg), Inference(Input=1149.20, Output=57472.10, Total=58621.30), Acc=0.1333
-DSC_window: Samples=32.27, Prepare(Total=8642.37 avg, Input=748.77 avg, Output=7893.60 avg), Inference(Input=816.87, Output=62078.13, Total=62895.00), Acc=0.1333
-DSC_pre: Samples=32.27, Prepare(Total=8642.37 avg, Input=748.77 avg, Output=7893.60 avg), Inference(Input=816.87, Output=62078.13, Total=62895.00), Acc=0.1333
+greedy hard count=30
+DSC_hard: Samples=28.53, Prepare(Total=8323.73 avg, Input=753.33 avg, Output=7570.40 avg), Inference(Input=1107.87, Output=54377.87, Total=55485.73), Acc=0.1333
+DSC: Samples=29.87, Prepare(Total=8323.73 avg, Input=753.33 avg, Output=7570.40 avg), Inference(Input=1149.20, Output=57472.10, Total=58621.30), Acc=0.1333
+DSC_greedy: Samples=29.87, Prepare(Total=8323.73 avg, Input=753.33 avg, Output=7570.40 avg), Inference(Input=1149.20, Output=57472.10, Total=58621.30), Acc=0.1333
+DSC_window: Samples=31.87, Prepare(Total=8323.73 avg, Input=753.33 avg, Output=7570.40 avg), Inference(Input=782.20, Output=61270.40, Total=62052.60), Acc=0.1333
+DSC_pre: Samples=31.87, Prepare(Total=8323.73 avg, Input=753.33 avg, Output=7570.40 avg), Inference(Input=782.20, Output=61270.40, Total=62052.60), Acc=0.1333
 
 Prepare 상세 정보:
-  Step 1 (Difficulty Ranking) time=4.69s
+  Step 1 (Difficulty Ranking) time=4.59s
   Step 2 (Easy/Hard Split) time=0.00s
-  Prepare Total time=4.69s (Step 1 + Step 2)
-  Step 1 (Difficulty Ranking, 문제당 평균) input_token=599.83 output_token=13.07
-  Step 2 (Problem Partition, 문제당 평균) input_token=148.93 output_token=7880.53
-  Prepare (문제당 평균) total_token=8642.37 input_token=748.77 output_token=7893.60
-  Prepare (전체 합계) input_token=22463 output_token=236808 time=4.69s
+  Prepare Total time=4.59s (Step 1 + Step 2)
+  Step 1 (Difficulty Ranking, 문제당 평균) input_token=604.40 output_token=12.97
+  Step 2 (Problem Partition, 문제당 평균) input_token=148.93 output_token=7557.43
+  Prepare (문제당 평균) total_token=8323.73 input_token=753.33 output_token=7570.40
+  Prepare (전체 합계) input_token=22599 output_token=227112 time=4.59s
 Done! Result saved to experiments/results/google/gemma-3-4b-it/stages-40/dsc_cmp/AIME_2024_google_gemma-3-4b-it_n_40_judge_window_24_interplot_16.json
 DSC results added to eval_result.txt: experiments/results/google/gemma-3-4b-it/stages-40/eval_result.txt

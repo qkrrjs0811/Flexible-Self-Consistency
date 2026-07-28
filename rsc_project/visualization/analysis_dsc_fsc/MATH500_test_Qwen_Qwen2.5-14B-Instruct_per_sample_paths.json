@@ -1,0 +1,3507 @@
+{
+  "model": "Qwen/Qwen2.5-14B-Instruct",
+  "dataset": "MATH500_test",
+  "samples": [
+    {
+      "id": "test/precalculus/807.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/intermediate_algebra/1994.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/algebra/2584.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/number_theory/572.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/1349.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/prealgebra/1622.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/number_theory/515.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/precalculus/927.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/algebra/2036.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/prealgebra/1139.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 21
+    },
+    {
+      "id": "test/number_theory/1032.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 13
+    },
+    {
+      "id": "test/intermediate_algebra/1197.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/number_theory/737.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/geometry/248.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/precalculus/1303.json",
+      "level": 1,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 24,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/precalculus/990.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 13
+    },
+    {
+      "id": "test/intermediate_algebra/134.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/precalculus/1199.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/geometry/434.json",
+      "level": 1,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/intermediate_algebra/1000.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/algebra/1098.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/607.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 19
+    },
+    {
+      "id": "test/algebra/1837.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/algebra/2193.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/algebra/2427.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/intermediate_algebra/1388.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/counting_and_probability/525.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 36,
+      "ours_paths": 18
+    },
+    {
+      "id": "test/prealgebra/1840.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/precalculus/779.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/counting_and_probability/666.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/number_theory/864.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 12,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1302.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/counting_and_probability/134.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/1072.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/counting_and_probability/119.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/number_theory/627.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/intermediate_algebra/428.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/geometry/967.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/algebra/24.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/number_theory/45.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/prealgebra/930.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/geometry/627.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 8,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/algebra/2214.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/intermediate_algebra/1454.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/prealgebra/1558.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/geometry/178.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/precalculus/285.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 14
+    },
+    {
+      "id": "test/algebra/305.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/1265.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1388.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/number_theory/1055.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/intermediate_algebra/1217.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/prealgebra/951.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/precalculus/1105.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/prealgebra/572.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/187.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/769.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/1168.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/algebra/722.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/prealgebra/1247.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/956.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 20,
+      "ours_paths": 17
+    },
+    {
+      "id": "test/intermediate_algebra/1247.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/precalculus/675.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 28,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/intermediate_algebra/279.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/precalculus/1146.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 18
+    },
+    {
+      "id": "test/prealgebra/1747.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/2046.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/prealgebra/1233.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/precalculus/1313.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 17
+    },
+    {
+      "id": "test/intermediate_algebra/207.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/number_theory/46.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/number_theory/516.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/geometry/456.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/algebra/2253.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/precalculus/24313.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/counting_and_probability/1114.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/intermediate_algebra/623.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/algebra/1004.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/47.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 14
+    },
+    {
+      "id": "test/prealgebra/192.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/1849.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 17
+    },
+    {
+      "id": "test/algebra/1035.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/2700.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 14
+    },
+    {
+      "id": "test/intermediate_algebra/2046.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/algebra/893.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/geometry/353.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/307.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/algebra/567.json",
+      "level": 1,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/algebra/892.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/number_theory/357.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 28,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1761.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/2023.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/counting_and_probability/377.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/algebra/873.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1646.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 32,
+      "ours_paths": 22
+    },
+    {
+      "id": "test/precalculus/34.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/intermediate_algebra/662.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 32
+    },
+    {
+      "id": "test/prealgebra/105.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 13
+    },
+    {
+      "id": "test/prealgebra/1924.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/precalculus/1300.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/geometry/183.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/intermediate_algebra/582.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 18
+    },
+    {
+      "id": "test/intermediate_algebra/431.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/558.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/intermediate_algebra/362.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 28,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/prealgebra/1804.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/intermediate_algebra/515.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/number_theory/914.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/intermediate_algebra/894.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/precalculus/44.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/intermediate_algebra/345.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 32,
+      "ours_paths": 27
+    },
+    {
+      "id": "test/counting_and_probability/23957.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/2058.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/algebra/2593.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/intermediate_algebra/1898.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/counting_and_probability/1060.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/algebra/2157.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/2251.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/232.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/prealgebra/1733.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/intermediate_algebra/128.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 28,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/prealgebra/505.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/1332.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/geometry/283.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/algebra/972.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/algebra/2232.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/1063.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 36,
+      "ours_paths": 17
+    },
+    {
+      "id": "test/number_theory/847.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/algebra/661.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 14
+    },
+    {
+      "id": "test/geometry/1140.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/number_theory/753.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/algebra/246.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/prealgebra/1686.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/prealgebra/1807.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/1126.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/prealgebra/1297.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/2022.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 24,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/number_theory/1257.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/counting_and_probability/430.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/intermediate_algebra/1151.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/number_theory/156.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/number_theory/612.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/counting_and_probability/159.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/precalculus/477.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/precalculus/43.json",
+      "level": 1,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/1408.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/algebra/1519.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/966.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 36,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/algebra/988.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/number_theory/931.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/intermediate_algebra/964.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 20,
+      "ours_paths": 22
+    },
+    {
+      "id": "test/precalculus/986.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 17
+    },
+    {
+      "id": "test/geometry/172.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 14
+    },
+    {
+      "id": "test/counting_and_probability/230.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 13
+    },
+    {
+      "id": "test/geometry/880.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 26
+    },
+    {
+      "id": "test/counting_and_probability/803.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/precalculus/117.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/intermediate_algebra/1410.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/algebra/2570.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/621.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/number_theory/521.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/algebra/1255.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/prealgebra/1655.json",
+      "level": 5,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/algebra/2517.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/precalculus/697.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/prealgebra/1356.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/prealgebra/1003.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 20,
+      "ours_paths": 19
+    },
+    {
+      "id": "test/algebra/478.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/counting_and_probability/181.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 20
+    },
+    {
+      "id": "test/geometry/802.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/297.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/prealgebra/1272.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/841.json",
+      "level": 1,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/algebra/686.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/algebra/351.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/intermediate_algebra/991.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/number_theory/598.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 8,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/geometry/65.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 21
+    },
+    {
+      "id": "test/prealgebra/1113.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/precalculus/659.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1908.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 40,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/1275.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/prealgebra/1922.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/1082.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/intermediate_algebra/183.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/algebra/1214.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/number_theory/978.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/algebra/2199.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/algebra/733.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 20
+    },
+    {
+      "id": "test/geometry/702.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 26
+    },
+    {
+      "id": "test/counting_and_probability/51.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/algebra/109.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/geometry/221.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/intermediate_algebra/1422.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/intermediate_algebra/2196.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/intermediate_algebra/591.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/1937.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/number_theory/838.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/counting_and_probability/508.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1907.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/prealgebra/2086.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/number_theory/149.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/algebra/291.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/intermediate_algebra/1555.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/intermediate_algebra/1510.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 13
+    },
+    {
+      "id": "test/precalculus/263.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/precalculus/541.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/counting_and_probability/389.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/number_theory/1201.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/number_theory/234.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/prealgebra/378.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/prealgebra/1555.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/algebra/2102.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/intermediate_algebra/102.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/counting_and_probability/765.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/algebra/907.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1436.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/number_theory/417.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 17
+    },
+    {
+      "id": "test/algebra/864.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/counting_and_probability/282.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 22
+    },
+    {
+      "id": "test/prealgebra/1961.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/number_theory/89.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/geometry/547.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/number_theory/183.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/precalculus/190.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 24,
+      "ours_paths": 13
+    },
+    {
+      "id": "test/algebra/2159.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/counting_and_probability/71.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/precalculus/819.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/precalculus/1056.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 20,
+      "ours_paths": 18
+    },
+    {
+      "id": "test/prealgebra/2057.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/intermediate_algebra/986.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/algebra/1578.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/intermediate_algebra/1354.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 32,
+      "ours_paths": 14
+    },
+    {
+      "id": "test/precalculus/441.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/intermediate_algebra/1837.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/prealgebra/153.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/precalculus/989.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 20,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/intermediate_algebra/337.json",
+      "level": 1,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/algebra/975.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/geometry/229.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 24,
+      "ours_paths": 21
+    },
+    {
+      "id": "test/prealgebra/874.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 18
+    },
+    {
+      "id": "test/algebra/1143.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/algebra/2626.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 14
+    },
+    {
+      "id": "test/geometry/254.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1251.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/intermediate_algebra/1210.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 36,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/algebra/1787.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/1123.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/precalculus/920.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 20
+    },
+    {
+      "id": "test/number_theory/1065.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/algebra/1934.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/counting_and_probability/894.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 13
+    },
+    {
+      "id": "test/algebra/2064.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/prealgebra/1458.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/counting_and_probability/1009.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/precalculus/452.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1995.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/geometry/473.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/694.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/intermediate_algebra/149.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/precalculus/580.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/geometry/347.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/prealgebra/1317.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/geometry/483.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/geometry/826.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 24,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/algebra/524.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1742.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/geometry/226.json",
+      "level": 1,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/number_theory/466.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/counting_and_probability/913.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/algebra/2551.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/number_theory/634.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/number_theory/533.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/prealgebra/993.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/geometry/686.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 23
+    },
+    {
+      "id": "test/algebra/346.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/1282.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/prealgebra/1834.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/number_theory/691.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1512.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/number_theory/1287.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/prealgebra/260.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 14
+    },
+    {
+      "id": "test/algebra/1184.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 21
+    },
+    {
+      "id": "test/prealgebra/1787.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/precalculus/768.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/intermediate_algebra/1411.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 19
+    },
+    {
+      "id": "test/intermediate_algebra/960.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 25
+    },
+    {
+      "id": "test/number_theory/631.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/precalculus/1172.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/intermediate_algebra/1300.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/634.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/counting_and_probability/25149.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/intermediate_algebra/90.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 20
+    },
+    {
+      "id": "test/algebra/2486.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/number_theory/488.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/precalculus/1201.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 20,
+      "ours_paths": 22
+    },
+    {
+      "id": "test/intermediate_algebra/754.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/number_theory/1172.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/precalculus/881.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 28,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/geometry/1097.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 13
+    },
+    {
+      "id": "test/counting_and_probability/339.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1044.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/prealgebra/465.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/geometry/965.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 22
+    },
+    {
+      "id": "test/intermediate_algebra/446.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/algebra/2257.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/1544.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/precalculus/695.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/geometry/711.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 28
+    },
+    {
+      "id": "test/number_theory/203.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/algebra/1842.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/number_theory/911.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/intermediate_algebra/1714.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/prealgebra/1423.json",
+      "level": 5,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 12,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/geometry/1108.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/algebra/791.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/algebra/276.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/2152.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/2735.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/425.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/geometry/947.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/prealgebra/954.json",
+      "level": 5,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/1936.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/counting_and_probability/870.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/geometry/465.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 36,
+      "ours_paths": 21
+    },
+    {
+      "id": "test/geometry/73.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/precalculus/742.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/intermediate_algebra/117.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 21
+    },
+    {
+      "id": "test/algebra/2176.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/prealgebra/1973.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/counting_and_probability/216.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/algebra/509.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/intermediate_algebra/190.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 20,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/intermediate_algebra/776.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 20
+    },
+    {
+      "id": "test/algebra/1457.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/number_theory/483.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/algebra/2592.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1730.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/number_theory/368.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/intermediate_algebra/1566.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 20,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/precalculus/801.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/algebra/858.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/prealgebra/1238.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/counting_and_probability/737.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/1572.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/algebra/1529.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/1338.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/1547.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/counting_and_probability/116.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/counting_and_probability/238.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/number_theory/686.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/precalculus/826.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/precalculus/1281.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 27
+    },
+    {
+      "id": "test/counting_and_probability/1014.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/algebra/529.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/intermediate_algebra/1166.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/algebra/1078.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/prealgebra/1353.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/intermediate_algebra/860.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 20,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/1407.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/precalculus/96.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/intermediate_algebra/1405.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 18
+    },
+    {
+      "id": "test/counting_and_probability/14.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 13
+    },
+    {
+      "id": "test/algebra/251.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/690.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 19
+    },
+    {
+      "id": "test/number_theory/820.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/number_theory/109.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/algebra/1199.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/geometry/106.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1187.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/precalculus/1289.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/intermediate_algebra/955.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/geometry/846.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/algebra/2264.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/algebra/1303.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/number_theory/427.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/geometry/538.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/number_theory/1185.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/prealgebra/1743.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1865.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 14
+    },
+    {
+      "id": "test/intermediate_algebra/1992.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/counting_and_probability/188.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/intermediate_algebra/1111.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 20
+    },
+    {
+      "id": "test/algebra/101.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/prealgebra/1298.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/2066.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/algebra/170.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/algebra/849.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/algebra/1031.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/geometry/795.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/algebra/853.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 19
+    },
+    {
+      "id": "test/algebra/2277.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/precalculus/902.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 24
+    },
+    {
+      "id": "test/algebra/518.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/1791.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 28
+    },
+    {
+      "id": "test/algebra/114.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/prealgebra/631.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 36,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/prealgebra/977.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/prealgebra/1991.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/prealgebra/1784.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/geometry/817.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 27
+    },
+    {
+      "id": "test/intermediate_algebra/1806.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 20,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/precalculus/1291.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 18
+    },
+    {
+      "id": "test/number_theory/928.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/counting_and_probability/761.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/prealgebra/1572.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/number_theory/132.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/algebra/1960.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/precalculus/398.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 20
+    },
+    {
+      "id": "test/intermediate_algebra/1797.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/prealgebra/65.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/prealgebra/1227.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/2146.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 28,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/algebra/2680.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/2391.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/number_theory/769.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/precalculus/681.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/algebra/776.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/algebra/1796.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/precalculus/145.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/precalculus/625.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/precalculus/1202.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 22
+    },
+    {
+      "id": "test/intermediate_algebra/2015.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 25
+    },
+    {
+      "id": "test/number_theory/1002.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 14
+    },
+    {
+      "id": "test/algebra/1339.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/precalculus/1133.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 21
+    },
+    {
+      "id": "test/geometry/843.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/algebra/2743.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/intermediate_algebra/121.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 20,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/intermediate_algebra/1014.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/prealgebra/2019.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/precalculus/499.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/intermediate_algebra/1462.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 28,
+      "ours_paths": 21
+    },
+    {
+      "id": "test/number_theory/410.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/prealgebra/1640.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/2043.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/counting_and_probability/10.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/algebra/1553.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 7
+    },
+    {
+      "id": "test/number_theory/255.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/intermediate_algebra/199.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/algebra/2080.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/2037.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/algebra/1343.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/668.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/counting_and_probability/731.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 22
+    },
+    {
+      "id": "test/intermediate_algebra/1779.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 23
+    },
+    {
+      "id": "test/algebra/2430.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/996.json",
+      "level": 1,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/number_theory/1000.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/algebra/2789.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/number_theory/13.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/number_theory/459.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/1814.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/algebra/2476.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 8,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/precalculus/323.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/counting_and_probability/190.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/1102.json",
+      "level": 1,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 28,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/number_theory/342.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 6
+    },
+    {
+      "id": "test/prealgebra/805.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 13
+    },
+    {
+      "id": "test/algebra/2780.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 12
+    },
+    {
+      "id": "test/prealgebra/914.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 14
+    },
+    {
+      "id": "test/algebra/824.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/number_theory/679.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 9
+    },
+    {
+      "id": "test/algebra/1425.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/intermediate_algebra/834.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/number_theory/72.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/precalculus/703.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 20,
+      "ours_paths": 17
+    },
+    {
+      "id": "test/prealgebra/1114.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/algebra/224.json",
+      "level": 4,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/435.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/intermediate_algebra/158.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 24,
+      "ours_paths": 18
+    },
+    {
+      "id": "test/prealgebra/846.json",
+      "level": 3,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/algebra/2470.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/prealgebra/1930.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/intermediate_algebra/752.json",
+      "level": 1,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 1
+    },
+    {
+      "id": "test/counting_and_probability/1003.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 28,
+      "ours_paths": 25
+    },
+    {
+      "id": "test/prealgebra/1252.json",
+      "level": 2,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/number_theory/22.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 5
+    },
+    {
+      "id": "test/intermediate_algebra/1279.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 23
+    },
+    {
+      "id": "test/number_theory/1128.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/precalculus/1252.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 15
+    },
+    {
+      "id": "test/intermediate_algebra/1467.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/number_theory/1090.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 21
+    },
+    {
+      "id": "test/precalculus/1082.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 8,
+      "ours_paths": 18
+    },
+    {
+      "id": "test/intermediate_algebra/101.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/counting_and_probability/199.json",
+      "level": 2,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 16
+    },
+    {
+      "id": "test/geometry/477.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/number_theory/239.json",
+      "level": 1,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/prealgebra/1203.json",
+      "level": 5,
+      "dsc_easy_hard": "easy",
+      "dsc_paths": 4,
+      "ours_paths": 3
+    },
+    {
+      "id": "test/intermediate_algebra/1365.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/intermediate_algebra/1350.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 18
+    },
+    {
+      "id": "test/prealgebra/1128.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 8
+    },
+    {
+      "id": "test/precalculus/356.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 4
+    },
+    {
+      "id": "test/algebra/2779.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/intermediate_algebra/1930.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 22
+    },
+    {
+      "id": "test/intermediate_algebra/1981.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 11
+    },
+    {
+      "id": "test/intermediate_algebra/1232.json",
+      "level": 3,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 2
+    },
+    {
+      "id": "test/geometry/561.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 24
+    },
+    {
+      "id": "test/intermediate_algebra/1508.json",
+      "level": 5,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 10
+    },
+    {
+      "id": "test/geometry/615.json",
+      "level": 4,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 4,
+      "ours_paths": 11
+    }
+  ],
+  "output_file": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/visualization/analysis_dsc_fsc/MATH500_test_Qwen_Qwen2.5-14B-Instruct_per_sample_paths.json"
+}

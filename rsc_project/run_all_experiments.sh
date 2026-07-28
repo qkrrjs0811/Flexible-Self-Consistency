@@ -18,7 +18,7 @@ TEMPERATURE="${TEMPERATURE:-0.7}"  # 기존 모델용 (Qwen3는 모드별로 다
 TOP_P="${TOP_P:-0.95}"  # 기존 모델용 (Qwen3는 모드별로 다름) 기존 0.95
 GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION:-0.9}"  # GPU 메모리 사용률 (0.0 ~ 1.0)
 DEVICE="${DEVICE:-cuda}"
-RESULTS_DIR="${RESULTS_DIR:-experiments/results}" 
+RESULTS_DIR="${RESULTS_DIR:-experiments/results_sampling_hyperparam}" 
 EVAL_DIR="${EVAL_DIR:-$SCRIPT_DIR/../eval}"
 NUM_TRIALS="${NUM_TRIALS:-1}"  # 부트스트래핑 반복 횟수 (기본값: 100)
 BOOTSTRAP_SEED="${BOOTSTRAP_SEED:-137}"  # 부트스트래핑 시드 (기본값: 42)
@@ -96,12 +96,13 @@ QWEN3_NON_THINKING_MIN_P="${QWEN3_NON_THINKING_MIN_P:-0.0}"
 
 # 모델 목록 (환경변수 MODEL_LIST로 덮어쓰기 가능, 공백 구분)
 DEFAULT_MODELS=(
-  # "Qwen/Qwen2.5-3B-Instruct"
-  "Qwen/Qwen2.5-7B-Instruct"
+  "Qwen/Qwen2.5-3B-Instruct"
+  # "Qwen/Qwen2.5-7B-Instruct"
   # "Qwen/Qwen2.5-14B-Instruct"
   # "meta-llama/Llama-3.2-3B-Instruct"
   # "meta-llama/Llama-3.1-8B-Instruct"
   # "google/gemma-3-4b-it"
+  # "google/gemma-3-12b-it"
   # "Qwen/Qwen3-4B"
   # "Qwen/Qwen3-8B"
   # nvidia/NVIDIA-Nemotron-Nano-9B-v2
@@ -121,14 +122,14 @@ declare -A DATASETS=(
   # ["AIME_2024"]="math"
   # ["AIME_2025"]="math"
   # ["MATH500_test"]="math"
-  # ["MATH_train"]="math"
+  ["MATH_train"]="math"
   # ["MATH2500"]="math"
   # ["AMC23"]="math"
   # ["GPQA-Diamond"]="science"
   # ["GSM8K"]="math"
   # ["DEEPMATH_2600"]="math"
-  #["MMLU-Pro"]="general"
-  ["MMLU-Pro_full"]="general"
+  # ["MMLU-Pro"]="general"
+  # ["MMLU-Pro_full"]="general"
 )
 
 # 데이터셋 순회 목록 (환경변수 DATASET_LIST로 덮어쓰기 가능)

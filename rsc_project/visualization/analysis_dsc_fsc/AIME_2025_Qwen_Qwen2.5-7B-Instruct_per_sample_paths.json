@@ -1,0 +1,247 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "dataset": "AIME_2025",
+  "samples": [
+    {
+      "id": "1",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 15,
+      "problem_type": "Number Theory"
+    },
+    {
+      "id": "2",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 32,
+      "problem_type": "Geometry"
+    },
+    {
+      "id": "3",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 31,
+      "problem_type": "Combinatorics"
+    },
+    {
+      "id": "4",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 12,
+      "ours_paths": 19,
+      "problem_type": "Algebra"
+    },
+    {
+      "id": "5",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 34,
+      "problem_type": "Combinatorics, Number Theory"
+    },
+    {
+      "id": "6",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 36,
+      "ours_paths": 17,
+      "problem_type": "Geometry"
+    },
+    {
+      "id": "7",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 32,
+      "ours_paths": 39,
+      "problem_type": "Combinatorics"
+    },
+    {
+      "id": "8",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 29,
+      "problem_type": "Algebra"
+    },
+    {
+      "id": "9",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 33,
+      "problem_type": "Algebra"
+    },
+    {
+      "id": "10",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 20,
+      "problem_type": "Combinatorics"
+    },
+    {
+      "id": "11",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 30,
+      "problem_type": "Algebra"
+    },
+    {
+      "id": "12",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 33,
+      "problem_type": "Algebra"
+    },
+    {
+      "id": "13",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 36,
+      "ours_paths": 33,
+      "problem_type": "Combinatorics"
+    },
+    {
+      "id": "14",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 39,
+      "problem_type": "Geometry"
+    },
+    {
+      "id": "15",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 37,
+      "problem_type": "Number Theory"
+    },
+    {
+      "id": "16",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 32,
+      "problem_type": "Geometry"
+    },
+    {
+      "id": "17",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 13,
+      "problem_type": "Number Theory"
+    },
+    {
+      "id": "18",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 33,
+      "problem_type": "Combinatorics"
+    },
+    {
+      "id": "19",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 18,
+      "problem_type": "Algebra"
+    },
+    {
+      "id": "20",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 31,
+      "problem_type": "Geometry"
+    },
+    {
+      "id": "21",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 33,
+      "problem_type": "Algebra, Geometry"
+    },
+    {
+      "id": "22",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 36,
+      "problem_type": "Number Theory"
+    },
+    {
+      "id": "23",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 28,
+      "problem_type": "Combinatorics"
+    },
+    {
+      "id": "24",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 17,
+      "problem_type": "Algebra"
+    },
+    {
+      "id": "25",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 16,
+      "ours_paths": 30,
+      "problem_type": "Combinatorics"
+    },
+    {
+      "id": "26",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 23,
+      "problem_type": "Combinatorics"
+    },
+    {
+      "id": "27",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 39,
+      "problem_type": "Geometry"
+    },
+    {
+      "id": "28",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 32,
+      "ours_paths": 24,
+      "problem_type": "Number Theory"
+    },
+    {
+      "id": "29",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 40,
+      "ours_paths": 32,
+      "problem_type": "Geometry"
+    },
+    {
+      "id": "30",
+      "level": null,
+      "dsc_easy_hard": "hard",
+      "dsc_paths": 32,
+      "ours_paths": 25,
+      "problem_type": "Algebra"
+    }
+  ],
+  "output_file": "/home/albert0811/dev_env/git/repos/RASC/rsc_project/visualization/analysis_dsc_fsc/AIME_2025_Qwen_Qwen2.5-7B-Instruct_per_sample_paths.json"
+}

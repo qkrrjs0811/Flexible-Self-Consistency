@@ -1,22 +1,27 @@
 #!/usr/bin/env python3
 """
-MATH500_test: (1) DSC greedy split × gold level 교차표 + path 사용 요약,
-(2) Ours는 probe JSON의 number_of_paths를 gold level별로 집계 (easy/hard 없음).
+DSC vs Ours(FSC) path 수 집계 — MATH500_test, AIME_2025 등 Stage1+probe 지원 데이터셋.
 
-DSC: dsc_pre와 동일한 greedy 준비 할당(allocate 1=easy, -1=hard)과 metadata.level 교차표.
-  추가: dsc_greedy 분류별 level×easy/hard path 수 요약 (cmp_cal.DSC 규칙).
+(1) DSC greedy split × level(또는 unknown) 교차표 + path 사용 요약
+(2) Ours: probe/math/<모델>/p_<p>/{dataset}.json 의 number_of_paths (id join)
 
-Ours: probe/math/<모델슬래그>/p_<p> 아래 JSON (샘플별 number_of_paths).
-  MATH500_test는 파일명이 MATH500_test.json 또는 MATH500.json 인 경우 모두 탐색한다.
-  evaluate_ours와 같이 max(1, min(max_n, ·)) 클립 후 level별 mean/min/max/histogram.
+DSC: dsc_pre와 동일 — greedy allocate, allocate_window, DSC_pre() (cmp_cal 규칙).
+
+Ours probe 파일명:
+  - MATH500_test: MATH500_test.json 또는 MATH500.json
+  - 그 외: {dataset_name}.json (예: AIME_2025.json)
 
 사용:
   cd rsc_project
-  python3 visualization/dsc_ours_math500_level.py
+  # MATH500 per-sample
+  python3 visualization/dsc_ours_math500_level.py --dataset_name MATH500_test --per_sample
+  # AIME 2025 per-sample (4모델 일괄)
+  bash visualization/run_per_sample_paths_aime2025.sh
 
-결과 (동일 output_dir, 기본 analysis_dsc_fsc):
+결과 (기본 visualization/analysis_dsc_fsc):
   - {dataset}_{model}_dsc_pre_level.json
   - {dataset}_{model}_ours_level_paths.json
+  - {dataset}_{model}_per_sample_paths.json  (--per_sample)
 """
 from __future__ import annotations
 
@@ -43,7 +48,8 @@ from evaluation.metrics import normalize_answer_eval  # noqa: E402
 from rsc.aggregator import SCAggregator  # noqa: E402
 
 from cmp_cal import (  # noqa: E402
-    MyStoppingCriteria,
+    DSC_pre,
+    allocate_window,
     clean_data,
     load_sc_samples_from_json,
     split_easy_hard,
@@ -100,6 +106,19 @@ def resolve_ours_probe_path(
         if os.path.isfile(path):
             return path, tried
     return None, tried
+
+
+def _problem_type_from_item(item: dict) -> Optional[str]:
+    """AIME 등: metadata.problem_type (str 또는 list) → 단일 문자열."""
+    md = item.get("metadata") or {}
+    pt = md.get("problem_type")
+    if pt is None:
+        return None
+    if isinstance(pt, list):
+        parts = [str(x).strip() for x in pt if x is not None and str(x).strip()]
+        return ", ".join(parts) if parts else None
+    text = str(pt).strip()
+    return text or None
 
 
 def _clip_n_paths(number_of_paths: Optional[Any], max_n: int) -> Optional[int]:
@@ -166,24 +185,26 @@ def _prepare_predict_batch_for_dsc(
     return subset_predict_batch[:local_sc_num]
 
 
-def _dsc_hard_paths_used(
+def _dsc_pre_paths_used(
     predict_batch: list,
     *,
-    window_size: int,
-    easy_threshold: float = 0.95,
+    initial_window_size: int,
+    extend_window_size: int,
 ) -> int:
-    """DSC(..., allocate!=1)와 동일: 조기 easy_stop 시 stop_position, 아니면 전체 길이."""
+    """cmp_cal DSC_pre()와 동일한 사용 path 수 (len(dsc_pre_batch))."""
     if not predict_batch:
         return 0
-    input_list = predict_batch
-    stop_position = len(input_list)
-    easy_stop_judge = MyStoppingCriteria(easy_threshold, 0)
-    for i in range(len(input_list) // window_size):
-        judge_result = easy_stop_judge.should_stop(input_list[: (i + 1) * window_size])
-        if judge_result["easy_stop"]:
-            stop_position = (i + 1) * window_size
-            return stop_position
-    return len(input_list)
+    dummy_tokens = {"input": 0, "output": [0] * len(predict_batch)}
+    dsc_pre_batch, _ = DSC_pre(
+        predict_batch,
+        predict_batch,
+        dummy_tokens,
+        dummy_tokens,
+        -1,
+        initial_window_size,
+        extend_window_size=extend_window_size,
+    )
+    return len(dsc_pre_batch)
 
 
 def _summarize_path_counts(counts: list) -> dict:
@@ -199,9 +220,43 @@ def _summarize_path_counts(counts: list) -> dict:
     }
 
 
+def _dsc_paths_for_sample(
+    allocate: int,
+    predict_batch: list,
+    initial_window_size: int,
+    *,
+    subset_n: int,
+    sc_num: int,
+    window_size: int,
+    bootstrap_seed: int,
+    trial: int,
+) -> tuple[str, int]:
+    """문항 하나: greedy easy/hard 라벨 + cmp_cal DSC_pre path 수."""
+    if allocate == 1:
+        lab = "easy"
+    elif allocate == -1:
+        lab = "hard"
+    else:
+        lab = f"other({allocate})"
+    pb = _prepare_predict_batch_for_dsc(
+        predict_batch,
+        subset_n=subset_n,
+        sc_num=sc_num,
+        bootstrap_seed=bootstrap_seed,
+        trial=trial,
+    )
+    n_paths = _dsc_pre_paths_used(
+        pb,
+        initial_window_size=initial_window_size,
+        extend_window_size=window_size,
+    )
+    return lab, n_paths
+
+
 def _build_paths_by_easy_hard_level(
     pre_batch: list,
     allocate_list_greedy: list,
+    window_list_actual: list,
     level_by_idx: list,
     *,
     subset_n: int,
@@ -209,33 +264,20 @@ def _build_paths_by_easy_hard_level(
     window_size: int,
     bootstrap_seed: int,
     trial: int,
-    easy_threshold: float,
 ) -> dict:
     """easy/hard × level 별 dsc_pre에서 쓴 path 수 요약."""
-    # raw 집계: lab -> level_str -> list of ints
     bucket: dict[str, dict[str, list]] = defaultdict(lambda: defaultdict(list))
     for i, a in enumerate(allocate_list_greedy):
-        pb = _prepare_predict_batch_for_dsc(
+        lab, n_paths = _dsc_paths_for_sample(
+            a,
             pre_batch[i],
+            window_list_actual[i],
             subset_n=subset_n,
             sc_num=sc_num,
+            window_size=window_size,
             bootstrap_seed=bootstrap_seed,
             trial=trial,
         )
-        if a == 1:
-            lab = "easy"
-            n_paths = 1 if pb else 0
-        elif a == -1:
-            lab = "hard"
-            n_paths = _dsc_hard_paths_used(
-                pb, window_size=window_size, easy_threshold=easy_threshold
-            )
-        else:
-            lab = f"other({a})"
-            n_paths = _dsc_hard_paths_used(
-                pb, window_size=window_size, easy_threshold=easy_threshold
-            ) if pb else 0
-
         lv = level_by_idx[i]
         key_lv = str(lv) if lv is not None else "unknown"
         bucket[lab][key_lv].append(n_paths)
@@ -246,6 +288,67 @@ def _build_paths_by_easy_hard_level(
         for lk in sorted(bucket[lab].keys(), key=_level_str_sort_key):
             inner[lk] = _summarize_path_counts(bucket[lab][lk])
         out[lab] = inner
+    return out
+
+
+def build_per_sample_paths(
+    raw_array: list,
+    pre_batch: list,
+    allocate_list_greedy: list,
+    window_list_actual: list,
+    level_by_idx: list,
+    *,
+    subset_n: int,
+    sc_num: int,
+    window_size: int,
+    bootstrap_seed: int,
+    trial: int,
+    ours_by_id: Optional[Dict[str, int]] = None,
+    max_n: int = 40,
+) -> List[dict]:
+    """문항별 DSC(dsc_pre)/Ours path 수 (id로 join)."""
+    rows: List[dict] = []
+    for i, item in enumerate(raw_array):
+        a = allocate_list_greedy[i]
+        lab, dsc_paths = _dsc_paths_for_sample(
+            a,
+            pre_batch[i],
+            window_list_actual[i],
+            subset_n=subset_n,
+            sc_num=sc_num,
+            window_size=window_size,
+            bootstrap_seed=bootstrap_seed,
+            trial=trial,
+        )
+        lv = level_by_idx[i]
+        sid = item.get("id")
+        ours_paths: Optional[int] = None
+        if sid and ours_by_id is not None and sid in ours_by_id:
+            ours_paths = _clip_n_paths(ours_by_id[sid], max_n)
+        row = {
+            "id": sid,
+            "level": lv,
+            "dsc_easy_hard": lab,
+            "dsc_paths": dsc_paths,
+            "ours_paths": ours_paths,
+        }
+        pt = _problem_type_from_item(item)
+        if pt is not None:
+            row["problem_type"] = pt
+        rows.append(row)
+    return rows
+
+
+def load_ours_paths_by_id(probe_path: str) -> Dict[str, int]:
+    """probe JSON에서 sample id → number_of_paths."""
+    with open(probe_path, encoding="utf-8") as f:
+        rows: List[dict] = json.load(f)
+    out: Dict[str, int] = {}
+    for row in rows:
+        sid = row.get("id")
+        n = row.get("number_of_paths")
+        if sid is not None and n is not None:
+            out[str(sid)] = int(n)
     return out
 
 
@@ -299,7 +402,7 @@ def _build_pre_lists(data_list: list, dataset_name: str):
     )
 
 
-def run_one_model(
+def _prepare_dsc_run(
     *,
     results_dir: str,
     model_name: str,
@@ -308,11 +411,11 @@ def run_one_model(
     n: int,
     judge_window_size: int,
     window_size: int,
+    interplot_size: int,
     bootstrap_seed: int,
     trial: int,
-    subset_n: int,
-    easy_threshold: float,
-):
+) -> dict:
+    """Stage1 + dsc_eval 로드 후 greedy allocate까지 (문항별 분석용 상태 포함)."""
     model_safe = model_name.replace("/", "_")
     stage1_path = os.path.join(
         results_dir,
@@ -346,8 +449,8 @@ def run_one_model(
         pre_answer,
         pre_batch,
         pre_tokens,
-        greedy_pre,
-        greedy_pre_answer,
+        _greedy_pre,
+        _greedy_pre_answer,
         greedy_pre_batch,
         greedy_pre_tokens,
     ) = _build_pre_lists(data_list, dataset_name)
@@ -375,11 +478,45 @@ def run_one_model(
         allocate_list_greedy = split_easy_hard_greedy(
             eval_result, pre_batch, judge_window_size, window_size, n
         )[-1]
+        window_list_actual = allocate_window(
+            eval_result, pre_batch, n, interplot_size=interplot_size, window_size=window_size
+        )
 
     if len(allocate_list_greedy) != len(level_by_idx):
         raise RuntimeError(
             f"길이 불일치: dsc_pre allocate={len(allocate_list_greedy)}, levels={len(level_by_idx)}"
         )
+
+    return {
+        "model_name": model_name,
+        "dataset_name": dataset_name,
+        "stages_config": stages_config,
+        "stage1_path": stage1_path,
+        "eval_path": eval_path,
+        "raw_array": raw_array,
+        "level_by_idx": level_by_idx,
+        "pre_batch": pre_batch,
+        "allocate_list_greedy": allocate_list_greedy,
+        "window_list_actual": window_list_actual,
+    }
+
+
+def _summarize_dsc_prepared(
+    prepared: dict,
+    *,
+    n: int,
+    judge_window_size: int,
+    window_size: int,
+    interplot_size: int,
+    bootstrap_seed: int,
+    trial: int,
+    subset_n: int,
+) -> dict:
+    raw_array = prepared["raw_array"]
+    level_by_idx = prepared["level_by_idx"]
+    pre_batch = prepared["pre_batch"]
+    allocate_list_greedy = prepared["allocate_list_greedy"]
+    window_list_actual = prepared["window_list_actual"]
 
     easy_hard_labels = []
     for a in allocate_list_greedy:
@@ -404,30 +541,114 @@ def run_one_model(
     paths_summary = _build_paths_by_easy_hard_level(
         pre_batch,
         allocate_list_greedy,
+        window_list_actual,
         level_by_idx,
         subset_n=subset_n,
         sc_num=n,
         window_size=window_size,
         bootstrap_seed=bootstrap_seed,
         trial=trial,
-        easy_threshold=easy_threshold,
     )
     return {
-        "model": model_name,
-        "dataset": dataset_name,
-        "stages_config": stages_config,
+        "model": prepared["model_name"],
+        "dataset": prepared["dataset_name"],
+        "stages_config": prepared["stages_config"],
         "n": n,
         "judge_window_size": judge_window_size,
         "window_size": window_size,
+        "interplot_size": interplot_size,
         "bootstrap_seed": bootstrap_seed,
         "trial": trial,
         "subset_n": subset_n,
-        "easy_threshold": easy_threshold,
+        "dsc_method": "dsc_pre",
         "easy_count": easy_n,
         "hard_count": hard_n,
         "crosstab": _ordered_crosstab({k: dict(v) for k, v in ct.items()}),
         "level_totals": _ordered_level_totals(level_totals_raw),
         "dsc_greedy_split_paths_used_by_easy_hard_level": paths_summary,
+        "stage1_path": prepared["stage1_path"],
+        "eval_path": prepared["eval_path"],
+        "samples_total": len(raw_array),
+    }
+
+
+def run_one_model(
+    *,
+    results_dir: str,
+    model_name: str,
+    stages_config: str,
+    dataset_name: str,
+    n: int,
+    judge_window_size: int,
+    window_size: int,
+    interplot_size: int,
+    bootstrap_seed: int,
+    trial: int,
+    subset_n: int,
+    return_prepared: bool = False,
+):
+    prepared = _prepare_dsc_run(
+        results_dir=results_dir,
+        model_name=model_name,
+        stages_config=stages_config,
+        dataset_name=dataset_name,
+        n=n,
+        judge_window_size=judge_window_size,
+        window_size=window_size,
+        interplot_size=interplot_size,
+        bootstrap_seed=bootstrap_seed,
+        trial=trial,
+    )
+    summary = _summarize_dsc_prepared(
+        prepared,
+        n=n,
+        judge_window_size=judge_window_size,
+        window_size=window_size,
+        interplot_size=interplot_size,
+        bootstrap_seed=bootstrap_seed,
+        trial=trial,
+        subset_n=subset_n,
+    )
+    if return_prepared:
+        return summary, prepared
+    return summary
+
+
+def build_per_sample_output(
+    prepared: dict,
+    *,
+    model_name: str,
+    dataset_name: str,
+    stages_config: str,
+    n: int,
+    judge_window_size: int,
+    window_size: int,
+    interplot_size: int,
+    bootstrap_seed: int,
+    trial: int,
+    subset_n: int,
+    ours_p: float,
+    probe_file: Optional[str],
+    ours_by_id: Optional[Dict[str, int]],
+) -> dict:
+    samples = build_per_sample_paths(
+        prepared["raw_array"],
+        prepared["pre_batch"],
+        prepared["allocate_list_greedy"],
+        prepared["window_list_actual"],
+        prepared["level_by_idx"],
+        subset_n=subset_n,
+        sc_num=n,
+        window_size=window_size,
+        bootstrap_seed=bootstrap_seed,
+        trial=trial,
+        ours_by_id=ours_by_id,
+        max_n=n,
+    )
+    return {
+        "model": model_name,
+        "dataset": dataset_name,
+        "samples": samples,
     }
 
 
@@ -488,9 +709,13 @@ def _output_basename_ours(dataset_name: str, model_safe: str) -> str:
     return f"{dataset_name}_{model_safe}_ours_level_paths.json"
 
 
+def _output_basename_per_sample(dataset_name: str, model_safe: str) -> str:
+    return f"{dataset_name}_{model_safe}_per_sample_paths.json"
+
+
 def main():
     ap = argparse.ArgumentParser(
-        description="MATH500: DSC level 교차표 + Ours level별 path 수 (probe)"
+        description="DSC vs Ours path 수 (MATH500_test, AIME_2025, …) + optional per-sample JSON"
     )
     ap.add_argument(
         "--results_dir",
@@ -502,7 +727,11 @@ def main():
         default=_default_output_dir(),
         help="모델별 JSON 저장 디렉터리 (기본: visualization/analysis_dsc_fsc)",
     )
-    ap.add_argument("--dataset_name", default="MATH500_test")
+    ap.add_argument(
+        "--dataset_name",
+        default="MATH500_test",
+        help="Stage1/dsc_eval/probe basename (예: MATH500_test, AIME_2025, AIME_2024)",
+    )
     ap.add_argument("--stages_config", default="40")
     ap.add_argument("--n", type=int, default=40)
     ap.add_argument("--judge_window_size", type=int, default=24)
@@ -516,10 +745,10 @@ def main():
         help="DSC path 집계 시 pool에서 뽑는 개수 (cmp_cal --subset_n, 기본 40)",
     )
     ap.add_argument(
-        "--easy_threshold",
-        type=float,
-        default=0.95,
-        help="hard 경로에서 DSC 조기 종료 MyStoppingCriteria easy 임계값 (cmp_cal DSC 기본)",
+        "--interplot_size",
+        type=int,
+        default=16,
+        help="dsc_pre allocate_window interplot_size (run_all_cmp.sh 기본 16)",
     )
     ap.add_argument(
         "--probe_dir",
@@ -552,6 +781,11 @@ def main():
         action="store_true",
         help="저장 후 전체 결과를 표준 출력에도 인쇄",
     )
+    ap.add_argument(
+        "--per_sample",
+        action="store_true",
+        help="문항별 dsc_paths / ours_paths를 per_sample_paths.json으로 저장",
+    )
     args = ap.parse_args()
 
     os.makedirs(args.output_dir, exist_ok=True)
@@ -564,20 +798,37 @@ def main():
         model_safe = model.replace("/", "_")
         out_name = _output_basename(args.dataset_name, model_safe)
         out_path = os.path.join(args.output_dir, out_name)
+        prepared = None
         try:
-            r = run_one_model(
-                results_dir=args.results_dir,
-                model_name=model,
-                stages_config=args.stages_config,
-                dataset_name=args.dataset_name,
-                n=args.n,
-                judge_window_size=args.judge_window_size,
-                window_size=args.window_size,
-                bootstrap_seed=args.bootstrap_seed,
-                trial=args.trial,
-                subset_n=args.subset_n,
-                easy_threshold=args.easy_threshold,
-            )
+            if args.per_sample:
+                r, prepared = run_one_model(
+                    results_dir=args.results_dir,
+                    model_name=model,
+                    stages_config=args.stages_config,
+                    dataset_name=args.dataset_name,
+                    n=args.n,
+                    judge_window_size=args.judge_window_size,
+                    window_size=args.window_size,
+                    bootstrap_seed=args.bootstrap_seed,
+                    trial=args.trial,
+                    subset_n=args.subset_n,
+                    interplot_size=args.interplot_size,
+                    return_prepared=True,
+                )
+            else:
+                r = run_one_model(
+                    results_dir=args.results_dir,
+                    model_name=model,
+                    stages_config=args.stages_config,
+                    dataset_name=args.dataset_name,
+                    n=args.n,
+                    judge_window_size=args.judge_window_size,
+                    window_size=args.window_size,
+                    interplot_size=args.interplot_size,
+                    bootstrap_seed=args.bootstrap_seed,
+                    trial=args.trial,
+                    subset_n=args.subset_n,
+                )
             r["output_file"] = os.path.abspath(out_path)
             with open(out_path, "w", encoding="utf-8") as f:
                 json.dump(r, f, indent=2, ensure_ascii=False)
@@ -594,6 +845,59 @@ def main():
                 json.dump(err_obj, f, indent=2, ensure_ascii=False)
             saved_paths.append(out_path)
             all_out.append(err_obj)
+            prepared = None
+
+        if args.per_sample and prepared is not None:
+            per_name = _output_basename_per_sample(args.dataset_name, model_safe)
+            per_path = os.path.join(args.output_dir, per_name)
+            probe_path, _probe_tried = resolve_ours_probe_path(
+                probe_dir=args.probe_dir,
+                model_name=model,
+                dataset_name=args.dataset_name,
+                ours_p=args.ours_p,
+            )
+            ours_by_id = None
+            probe_abs = None
+            if probe_path and not args.skip_ours:
+                try:
+                    ours_by_id = load_ours_paths_by_id(probe_path)
+                    probe_abs = os.path.abspath(probe_path)
+                except (OSError, ValueError, TypeError) as e:
+                    print(
+                        f"  [per_sample] Ours probe 로드 실패 ({model}): {e}",
+                        file=sys.stderr,
+                    )
+            try:
+                per_obj = build_per_sample_output(
+                    prepared,
+                    model_name=model,
+                    dataset_name=args.dataset_name,
+                    stages_config=args.stages_config,
+                    n=args.n,
+                    judge_window_size=args.judge_window_size,
+                    window_size=args.window_size,
+                    interplot_size=args.interplot_size,
+                    bootstrap_seed=args.bootstrap_seed,
+                    trial=args.trial,
+                    subset_n=args.subset_n,
+                    ours_p=args.ours_p,
+                    probe_file=probe_abs,
+                    ours_by_id=ours_by_id,
+                )
+                per_obj["output_file"] = os.path.abspath(per_path)
+                with open(per_path, "w", encoding="utf-8") as f:
+                    json.dump(per_obj, f, indent=2, ensure_ascii=False)
+                saved_paths.append(per_path)
+            except (RuntimeError, ValueError, TypeError) as e:
+                err_per = {
+                    "model": model,
+                    "dataset": args.dataset_name,
+                    "error": str(e),
+                    "output_file": os.path.abspath(per_path),
+                }
+                with open(per_path, "w", encoding="utf-8") as f:
+                    json.dump(err_per, f, indent=2, ensure_ascii=False)
+                saved_paths.append(per_path)
 
         if not args.skip_ours:
             ours_name = _output_basename_ours(args.dataset_name, model_safe)

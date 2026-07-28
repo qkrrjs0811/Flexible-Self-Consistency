@@ -1,0 +1,2 @@
+INFO 07-09 14:00:30 [__init__.py:216] Automatically detected platform cuda.
+DSC results added to eval_result.txt: experiments/results/google/gemma-3-4b-it/stages-40/eval_result.txt
