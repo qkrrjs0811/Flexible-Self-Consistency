@@ -119,7 +119,8 @@ def run_single_inference(config_path: str = 'experiments/config.yaml',
         max_model_len=config['model'].get('max_model_len', 16384),
         enable_thinking=config['model'].get('enable_thinking', False),
         prompt_template_path=prompt_template_path,
-        refinement_template_path=refinement_template_path
+        refinement_template_path=refinement_template_path,
+        seed=config['model'].get('seed')
     )
     print("모델 로딩 완료!")
     

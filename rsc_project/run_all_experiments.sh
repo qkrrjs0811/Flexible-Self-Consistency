@@ -17,8 +17,9 @@ BATCH_SIZE="${BATCH_SIZE:-64}" # 배치 크기
 TEMPERATURE="${TEMPERATURE:-0.7}"  # 기존 모델용 (Qwen3는 모드별로 다름) 기존 0.7
 TOP_P="${TOP_P:-0.95}"  # 기존 모델용 (Qwen3는 모드별로 다름) 기존 0.95
 GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION:-0.9}"  # GPU 메모리 사용률 (0.0 ~ 1.0)
+SEED="${SEED:-42}"  # vLLM 생성 시드 (SEED=none 이면 비결정적 생성)
 DEVICE="${DEVICE:-cuda}"
-RESULTS_DIR="${RESULTS_DIR:-experiments/results_sampling_hyperparam}" 
+RESULTS_DIR="${RESULTS_DIR:-experiments/results}"
 EVAL_DIR="${EVAL_DIR:-$SCRIPT_DIR/../eval}"
 NUM_TRIALS="${NUM_TRIALS:-1}"  # 부트스트래핑 반복 횟수 (기본값: 100)
 BOOTSTRAP_SEED="${BOOTSTRAP_SEED:-137}"  # 부트스트래핑 시드 (기본값: 42)
@@ -202,6 +203,7 @@ model:
   gpu_memory_utilization: $GPU_MEMORY_UTILIZATION
   max_model_len: $max_model_len_value
   enable_thinking: $enable_thinking
+  seed: $( [[ "$SEED" == "none" ]] && echo null || echo "$SEED" )
 
 rsc:
   stages:

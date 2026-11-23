@@ -36,11 +36,7 @@ for _ in range(10):
     current_dir = parent
 
 if rsc_project_dir is None:
-    rsc_project_dir = "/home/albert0811/dev_env/git/repos/RASC/rsc_project"
-    if not os.path.exists(rsc_project_dir):
-        rsc_project_dir = os.path.abspath(
-            os.path.join(os.path.dirname(script_dir), "..", "rsc_project")
-        )
+    rsc_project_dir = os.path.dirname(script_dir)
 
 if rsc_project_dir and os.path.exists(rsc_project_dir):
     if rsc_project_dir not in sys.path:

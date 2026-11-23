@@ -49,7 +49,8 @@ class ReasoningPathGenerator:
                  gpu_memory_utilization: float = 0.85, max_model_len: int = 16384,
                  enable_thinking: bool = False,
                  prompt_template_path: str = None,
-                 refinement_template_path: str = None):
+                 refinement_template_path: str = None,
+                 seed: Optional[int] = None):
         """
         Args:
             model_name: 모델 이름 (HuggingFace 경로)
@@ -61,6 +62,7 @@ class ReasoningPathGenerator:
             enable_thinking: Qwen3 모델의 thinking 모드 활성화 여부
             prompt_template_path: 프롬프트 템플릿 파일 경로 (None이면 기본 경로 사용)
             refinement_template_path: Refinement 프롬프트 템플릿 파일 경로 (None이면 기본 경로 사용)
+            seed: vLLM 샘플링 시드 (None이면 비결정적; 재현하려면 정수 지정)
         """
         self.model_name = model_name
         self.device = device
@@ -92,6 +94,8 @@ class ReasoningPathGenerator:
                 'max_model_len': max_model_len,
                 'trust_remote_code': True,
             }
+            if seed is not None:
+                llm_kwargs['seed'] = seed
             self.llm = LLM(model=model_name, **llm_kwargs)
         else:
             self.llm = llm
