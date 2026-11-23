@@ -53,7 +53,12 @@ DEFAULT_MODELS = [
     "google/gemma-3-4b-it",
 ]
 DEFAULT_STAGES_DIR = "stages-40"
-METRICS_FILENAME = "MMLU-Pro_metrics_by_category.json"
+DEFAULT_DATASET = "MMLU-Pro"
+DATASET_CHOICES = ["MMLU-Pro", "MMLU-Pro_full"]
+
+
+def _metrics_filename(dataset: str) -> str:
+    return f"{dataset}_metrics_by_category.json"
 
 METHOD_STYLES = {
     "SC": {"color": "#8fb8de", "label": "SC", "alpha": 0.95},
@@ -69,11 +74,11 @@ def _results_root() -> str:
     return os.path.normpath(os.path.join(script_dir, "..", "experiments", "results"))
 
 
-def _json_path_for_model(model: str, stages_dir: str) -> str:
+def _json_path_for_model(model: str, stages_dir: str, metrics_filename: str) -> str:
     """model: results 하위 상대 경로 (예: Qwen/Qwen2.5-7B-Instruct)."""
     m = model.strip().strip("/").replace(os.sep, "/")
     return os.path.normpath(
-        os.path.join(_results_root(), m, stages_dir, METRICS_FILENAME)
+        os.path.join(_results_root(), m, stages_dir, metrics_filename)
     )
 
 
@@ -84,13 +89,13 @@ def _normalize_model_key(model: str) -> str:
     )
 
 
-def _resolve_json_path_for_model(model: str, stages_dir: str) -> str:
+def _resolve_json_path_for_model(model: str, stages_dir: str, metrics_filename: str) -> str:
     """
     model 입력을 유연하게 해석해 metrics json 경로를 찾는다.
-    - 정확 경로: results/<model>/<stages>/MMLU-Pro_metrics_by_category.json
+    - 정확 경로: results/<model>/<stages>/<dataset>_metrics_by_category.json
     - 짧은 이름/소문자: leaf 또는 rel path를 대소문자 무시 매칭
     """
-    direct = _json_path_for_model(model, stages_dir)
+    direct = _json_path_for_model(model, stages_dir, metrics_filename)
     if os.path.exists(direct):
         return direct
 
@@ -103,7 +108,7 @@ def _resolve_json_path_for_model(model: str, stages_dir: str) -> str:
     matches: List[str] = []
 
     for root, _dirs, files in os.walk(results_root):
-        if METRICS_FILENAME not in files:
+        if metrics_filename not in files:
             continue
         if os.path.basename(root) != stages_dir:
             continue
@@ -113,7 +118,7 @@ def _resolve_json_path_for_model(model: str, stages_dir: str) -> str:
         rel_norm = _normalize_model_key(rel_model)
         rel_leaf_norm = _normalize_model_key(os.path.basename(model_dir))
         if rel_norm == model_norm or rel_leaf_norm == leaf_norm:
-            matches.append(os.path.join(root, METRICS_FILENAME))
+            matches.append(os.path.join(root, metrics_filename))
 
     if len(matches) == 1:
         return matches[0]
@@ -171,7 +176,8 @@ def _extract_metrics(
             acc_map[method].append(acc)
             tok_map[method].append(tok)
 
-        dsc_entry = dsc.get(cat, {}).get("dsc", {})
+        # eval_result.txt 의 DSC 라인(cmp_cal: dsc_pre)과 동일한 변형 사용
+        dsc_entry = dsc.get(cat, {}).get("dsc_pre", {})
         dsc_acc = float(dsc_entry.get("accuracy", np.nan))
         dsc_in = float(dsc_entry.get("avg_input_tokens", np.nan))
         dsc_out = float(dsc_entry.get("avg_output_tokens", np.nan))
@@ -345,6 +351,7 @@ def create_plot(
         fig.subplots_adjust(top=0.86, bottom=0.12, wspace=0.36)
     else:
         fig.subplots_adjust(top=0.925, bottom=0.06, hspace=_SUBPLOT_HSPACE)
+    os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"saved: {output_path}")
@@ -366,6 +373,9 @@ stages 폴더가 stages-40이 아닐 때:
   python rsc_project/visualization/visualize_mmlu_pro_category_radar.py \\
     --model google/gemma-3-4b-it --stages stages-40
 
+MMLU-Pro 전체(12,032문항) 결과로 실행 (visualize_mmlu_pro_category_radar_full/ 에 저장):
+  python rsc_project/visualization/visualize_mmlu_pro_category_radar.py --dataset MMLU-Pro_full
+
 출력 경로 직접 지정 (단일 모델, 세로: 경로 그대로, 가로: 동일 이름에 _horizontal 접미사):
   python rsc_project/visualization/visualize_mmlu_pro_category_radar.py \\
     --model Qwen/Qwen2.5-7B-Instruct --output_file /tmp/my_radar.png
@@ -386,12 +396,23 @@ stages 폴더가 stages-40이 아닐 때:
         default=DEFAULT_STAGES_DIR,
         help=f"결과 디렉터리명 (기본: {DEFAULT_STAGES_DIR}, 또는 40 → stages-40)",
     )
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        default=DEFAULT_DATASET,
+        choices=DATASET_CHOICES,
+        help=f"<dataset>_metrics_by_category.json 을 읽음 (기본: {DEFAULT_DATASET})",
+    )
     parser.add_argument("--output_file", type=str, default=None)
     args = parser.parse_args()
 
     stages_dir = args.stages if str(args.stages).startswith("stages-") else f"stages-{args.stages}"
     script_dir = os.path.dirname(os.path.abspath(__file__))
     script_name = os.path.splitext(os.path.basename(__file__))[0]
+    # MMLU-Pro_full 은 기존 subset PNG 를 덮어쓰지 않도록 별도 폴더/파일명 사용
+    if args.dataset == "MMLU-Pro_full":
+        script_name = f"{script_name}_full"
+    metrics_filename = _metrics_filename(args.dataset)
 
     models_to_run = [args.model] if args.model else DEFAULT_MODELS
 
@@ -400,7 +421,7 @@ stages 폴더가 stages-40이 아닐 때:
         raise ValueError("--output_file 은 --model 단일 실행일 때만 사용할 수 있습니다.")
 
     for model in models_to_run:
-        json_file = _resolve_json_path_for_model(model, stages_dir)
+        json_file = _resolve_json_path_for_model(model, stages_dir, metrics_filename)
 
         if args.output_file:
             out = os.path.abspath(args.output_file)

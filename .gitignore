@@ -27,6 +27,7 @@ confidence_analysis/*.png
 src/eval/*.png
 rsc_project/experiments/results/
 rsc_project/experiments/results_optimal/
+rsc_project/experiments/results_sampling_hyperparam/
 rsc_project/probe
 
 
@@ -35,3 +36,7 @@ src/api_key_claude_yw.txt
 src/api_key_gy.txt
 *.key
 .env
+# experiment outputs (stored on Google Drive)
+rsc_project/experiments/
+rsc_project/eval/*
+!rsc_project/eval/aggregate_samples.py
