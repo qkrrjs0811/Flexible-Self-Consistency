@@ -1207,8 +1207,9 @@ def process_single_dataset(results_dir: str, model_name: str, dataset_name: str,
 
 def main():
     parser = argparse.ArgumentParser(description='η_adj 기반 동적 SC 샘플링 및 평가 (probe 폴더 사용)')
-    parser.add_argument('--probe_dir', type=str, default='probe',
-                       help='probe 디렉토리 경로 (기본값: probe)')
+    parser.add_argument('--probe_dir', type=str, default='probe/math',
+                       help='probe 디렉토리 경로 (기본값: probe/math). '
+                            'probe 전체를 지정하면 math/math2500 의 같은 모델·데이터셋 파일이 섞일 수 있습니다.')
     parser.add_argument('--results_dir', type=str, default='experiments/results',
                        help='results 디렉토리 경로 (기본값: rsc_project/experiments/results)')
     parser.add_argument('--stages_config', type=str, default='stages-40',

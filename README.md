@@ -42,7 +42,7 @@ SC와 비슷하거나 더 높은 정확도를 더 적은 생성 비용으로 달
     └── experiments/results/      # (Drive) Stage1 path 및 평가 결과
 ```
 
-> `src/` 는 초기 버전(confidence 기반 early stopping) 코드로, 현재 실험 파이프라인에서는 사용하지 않습니다.
+> `src/` 는 초기 버전(confidence 기반 early stopping) 코드입니다. 현재 파이프라인은 few-shot 예시(`src/fewshot.py`)만 참조합니다.
 
 **Models**: Qwen2.5-3B/7B/14B-Instruct, gemma-3-4b-it
 **Datasets**: MATH500, AMC23, AIME 2024, AIME 2025, GPQA-Diamond, MMLU-Pro (+full)
@@ -81,7 +81,7 @@ cd rsc_project                       # 이후 모든 명령은 rsc_project/ 에�
 
 ```bash
 cd rsc_project
-unzip probe.zip && unzip experiments.zip && unzip eval.zip
+unzip probe.zip && unzip experiments.zip && unzip -n eval.zip   # -n: git에 있는 eval/aggregate_samples.py 유지
 ```
 
 > probe(`number_of_paths`)를 생성하는 코드는 이 저장소에 포함되어 있지 않습니다. FSC 평가는 Drive의 `probe/` 를 입력으로 사용합니다.
